@@ -2,8 +2,8 @@
 
 ---
 
-DevDistrict is an open-source dev comunity powerd by [NextJS 14](https://nextjs.org/) with [Typescritp](https://www.typescriptlang.org/).
-Here you cand post blog articles, report provlems and bug and share experiences and positive thoughts.
+DevDistrict is an open-source dev comunity powerd by [NextJS 14](https://nextjs.org/) with [Typescript](https://www.typescriptlang.org/).
+Here you cand post blog articles, report problems and bugs and share experiences and positive thoughts.
 
 ## Authentication
 

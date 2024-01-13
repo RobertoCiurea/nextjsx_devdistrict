@@ -3,7 +3,7 @@
 ---
 
 DevDistrict is an open-source dev comunity powerd by [NextJS 14](https://nextjs.org/) with [Typescript](https://www.typescriptlang.org/).
-Here you cand post blog articles, report problems and bugs and share experiences and positive thoughts.
+Here you can post blog articles, report problems and bugs and share experiences and positive thoughts.
 
 ## Authentication
 
@@ -11,7 +11,7 @@ Here you cand post blog articles, report problems and bugs and share experiences
 
 Authentication is provided by [NextAuth.js](https://next-auth.js.org/) with the next session providers:
 
-- [Email Provider](https://next-auth.js.org/providers/email) uses email to send "magic links" that can be used to sign in. The API used for sending emails is provided by [Resend](https://resend.com/).
+- [Credentials Provider](https://next-auth.js.org/providers/credentials).
 - [Github](https://next-auth.js.org/providers/github).
 - [Google](https://next-auth.js.org/providers/google).
 
@@ -29,3 +29,16 @@ The database is hosted by [Neon](https://neon.tech/).
 Aplication's styles are provided by [TailwindCSS](https://tailwindcss.com/) with some additional UI libraries like:
 
 - [HeadlessUI](https://headlessui.com/).
+
+## Images and icons
+
+---
+
+All images and icons that DevDistrict is using are provided by:
+
+- [Bing ImageCreator](https://www.bing.com/images/create?FORM=GENILP)
+- [IconFinder](https://www.iconfinder.com/)
+
+Users's avatars that are using the traditional way to sign up are from [DiceBear](https://www.dicebear.com/)
+
+Additionally DevDistrict is also using GIFs from [GIPHY](https://giphy.com/)

@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    /*colors*/
+  --bg-primary: #202122;
+  --primary-accent: #9400d3;
+  --primary-accent-hover: #720099;
+
+  /*fonst*/
+  --montserrat: font-family: 'Montserrat', sans-serif;
+  --raleway: font-family: 'Raleway', sans-serif;
+}

@@ -1,31 +1,61 @@
 import type { NextAuthOptions } from "next-auth";
-import EmailProvider from "next-auth/providers/email";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import prisma from "./db";
+import { PrismaClient } from "@prisma/client";
+import { prismaOptions } from "./db";
+import bcrypt from "bcrypt";
+const prisma = new PrismaClient();
+
 export const authOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prismaOptions),
+
   providers: [
-    //magic link via emails
-    EmailProvider({
-      server: {
-        host: process.env.EMAIL_SERVER_HOST,
-        port: process.env.EMAIL_SERVER_PORT,
-        auth: {
-          user: process.env.EMAIL_SERVER_USER,
-          pass: process.env.EMAIL_SERVER_PASSWORD,
-        },
+    //credentials
+    CredentialsProvider({
+      name: "credentials",
+      credentials: {
+        name: { label: "Username", type: "text" },
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
       },
-      from: process.env.EMAIL_FROM,
+      async authorize(credentials) {
+        //chechk for user's email and password
+        if (!credentials?.email || !credentials.password) return null;
+        //check if user exists
+        const user = await prisma.user.findUnique({
+          where: {
+            email: credentials?.email,
+          },
+        });
+        if (!user) return null;
+
+        //check if password is valid
+        const checkPassword = await bcrypt.compare(
+          credentials?.password,
+          user.password as string
+        );
+        if (!checkPassword) return null;
+
+        return user;
+      },
     }),
+    //github session provider
     GitHubProvider({
       clientId: process.env.GITHUB_ID as string,
       clientSecret: process.env.GITHUB_SECRET as string,
     }),
+    //google session provider
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
   ],
+  session: {
+    strategy: "jwt",
+    maxAge: 3600,
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+  debug: process.env.NODE_ENV === "development",
 } satisfies NextAuthOptions;

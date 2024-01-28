@@ -13,10 +13,15 @@ const config: Config = {
         background: "var(--bg-primary)",
         primaryAccent: "var(--primary-accent)",
         primaryAccentHover: "var(--primary-accent-hover)",
+        primaryGray: "var(--primary-gray)",
       },
       fontFamily: {
         Montserrat: "'Montserrat', sans-serif",
         Raleway: "'Raleway', sans-serif",
+      },
+      backgroundImage: {
+        "devdistrict-banner":
+          "linear-gradient(to right bottom, rgba(0,0,0,1), rgba(0,0,0,0.4)), url('../public/images/devdistrict_banner.png')",
       },
     },
   },

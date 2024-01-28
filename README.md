@@ -13,7 +13,6 @@ Authentication is provided by [NextAuth.js](https://next-auth.js.org/) with the 
 
 - [Credentials Provider](https://next-auth.js.org/providers/credentials).
 - [Github](https://next-auth.js.org/providers/github).
-- [Google](https://next-auth.js.org/providers/google).
 
 ## Database
 

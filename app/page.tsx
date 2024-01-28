@@ -1,15 +1,25 @@
 import { getSession } from "@/app/utils/getSession";
 import Image from "next/image";
-import Banner from "@/public/images/devdistrict_banner.png";
+import Banner from "@/components/Banner";
 import { signOut } from "next-auth/react";
+import BlogArticlesGridTemplate from "@/components/BlogArticlesGridTemplate";
+import BugArticlesGridTemplate from "@/components/BugArticlesGridTemplate";
 export default async function Home() {
   const session = await getSession();
-  console.log(session);
+  // console.log(session);
   // console.log(session?.user?.image);
   return (
-    <>
-      <h1>Home page</h1>
-      <h1>Hellog {session?.user?.name}</h1>
-    </>
+    <div>
+      <Banner />
+      <h1 className="text-2xl sm:text-3xl  font-semibold font-Raleway text-white ml-10 lg:ml-7 mb-10">
+        Popular posts
+      </h1>
+      <BlogArticlesGridTemplate />
+      <h1 className="text-2xl sm:text-3xl  font-semibold font-Raleway text-white ml-10 lg:ml-7 mb-10">
+        Bugs and <br className="block md:hidden" />
+        problems
+      </h1>
+      <BugArticlesGridTemplate />
+    </div>
   );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import LoginWithEmail from "@/components/LoginWithEmail";
 import LoginWithGithub from "@/components/LoginWithGithub";
-import LoginWithGoogle from "@/components/LoginWithGoogle";
+
 import { getSession } from "../utils/getSession";
 import Forbidden from "@/components/Forbidden";
 import Link from "next/link";
@@ -39,7 +39,6 @@ const page = async () => {
         </h1>
         <div className="flex flex-col gap-5 mt-3">
           <LoginWithGithub />
-          <LoginWithGoogle />
         </div>
       </div>
       {/*link to the register page */}

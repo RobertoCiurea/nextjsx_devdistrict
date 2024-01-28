@@ -9,6 +9,12 @@ const nextConfig = {
         port: "",
         pathname: "/7.x/initials/**",
       },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        port: "",
+        pathname: "/u/**",
+      },
     ],
   },
 };

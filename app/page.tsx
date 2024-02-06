@@ -1,7 +1,5 @@
 import { getSession } from "@/app/utils/getSession";
-import Image from "next/image";
 import Banner from "@/components/Banner";
-import { signOut } from "next-auth/react";
 import BlogArticlesGridTemplate from "@/components/BlogArticlesGridTemplate";
 import BugArticlesGridTemplate from "@/components/BugArticlesGridTemplate";
 export default async function Home() {

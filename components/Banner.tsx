@@ -10,7 +10,7 @@ const Banner = () => {
         </p>
         <p>
           all over the
-          <span className="font-bold">world</span> while{" "}
+          <span className="font-bold"> world</span> while{" "}
           <span className="font-bold">sharing</span>
         </p>
         <p>

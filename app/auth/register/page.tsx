@@ -1,6 +1,6 @@
 import React from "react";
 import RegisterWithEmail from "@/components/RegisterWithEmail";
-import { getSession } from "../utils/getSession";
+import { getSession } from "../../utils/getSession";
 import Forbidden from "@/components/Forbidden";
 import Link from "next/link";
 
@@ -32,7 +32,7 @@ const page = async () => {
       <div className="text-white text-sm lg:text-md text-center">
         <h1>You have an account already?</h1>
         <Link
-          href="/login"
+          href="/auth/login"
           className="text-primaryAccent underline hover:text-primaryAccentHover"
         >
           {" "}

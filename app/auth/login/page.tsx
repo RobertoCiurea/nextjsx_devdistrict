@@ -1,8 +1,8 @@
 import React from "react";
 import LoginWithEmail from "@/components/LoginWithEmail";
 import LoginWithGithub from "@/components/LoginWithGithub";
-
-import { getSession } from "../utils/getSession";
+import LoginwithGoogle from "@/components/LoginWithGoogle";
+import { getSession } from "../../utils/getSession";
 import Forbidden from "@/components/Forbidden";
 import Link from "next/link";
 const page = async () => {
@@ -39,13 +39,14 @@ const page = async () => {
         </h1>
         <div className="flex flex-col gap-5 mt-3">
           <LoginWithGithub />
+          <LoginwithGoogle />
         </div>
       </div>
       {/*link to the register page */}
       <div className="text-white text-sm lg:text-md text-center">
         <h1>You don't have an account?</h1>
         <Link
-          href="/register"
+          href="/auth/register"
           className="text-primaryAccent underline hover:text-primaryAccentHover"
         >
           {" "}

@@ -13,7 +13,6 @@ const Header = () => {
   const router = useRouter();
 
   const imgSrc = session.data?.user?.image;
-  console.log(typeof imgSrc);
   return (
     <div className="flex justify-between sm:justify-between items-center mx-3 sm:mx-20">
       <Link href="/">
@@ -44,14 +43,14 @@ const Header = () => {
             </div>
             <button
               className="font-Raleway text-lg p-3 text-center  text-primaryAccent rounded-full font-bold bg-white shadow-lg shadow-white/35 hover:bg-slate-200 hover:shadow-white/30"
-              onClick={() => signOut({ callbackUrl: "/login" })}
+              onClick={() => signOut({ callbackUrl: "/auth/login" })}
             >
               Sign out
             </button>
           </div>
         </>
       ) : (
-        <Link href="/login">
+        <Link href="/auth/login">
           <button className="font-Raleway text-md sm:text-lg font-semibold md:text-xl p-2 sm:p-4 text-center  text-white rounded-full bg-gradient-to-b from-primaryAccent to-primaryAccentHover shadow-xl shadow-purple-700/50 transition hover:bg-gradient-to-b hover:from-primaryAccentHover hover:to-primaryAccentHover hover:text-gray-300 hover:shadow-purple-800/70">
             Sign in
           </button>

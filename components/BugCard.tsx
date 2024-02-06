@@ -21,7 +21,7 @@ const BugCard = ({
 }: BugCardProps) => {
   if (!loading)
     return (
-      <div className="flex flex-col bg-white rounded-xl w-full md:w-[400px] px-5 py-2 m-10 sm:w-[500px] md:w-[400px]">
+      <div className="flex flex-col bg-white rounded-xl w-full md:w-[400px] px-5 py-2 m-10 sm:w-[500px] ">
         {/*Top section */}
         <div className="flex justify-between">
           <Image src={CodeIcon} alt="Code Icon" width={30} />
@@ -37,7 +37,7 @@ const BugCard = ({
         {/*Bottom section */}
         <div className="flex justify-between">
           {/*Left section */}
-          <div className="flex justify-center gap-5 items-center font-bold font-Raleway">
+          <div className="flex flex-col md:flex-row justify-center md:gap-5 items-start md:items-center font-bold font-Raleway">
             {/*answers */}
             <div className="flex justify-center gap-2 text-primaryGray cursor-pointer">
               <p>Answers</p>

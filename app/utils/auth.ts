@@ -29,14 +29,22 @@ export const authOptions = {
             email: credentials?.email,
           },
         });
-        if (!user) return null;
+        // console.log(user);
+        if (!user) throw new Error("User not found");
 
         //check if password is valid
-        const checkPassword = await bcrypt.compare(
-          credentials?.password,
-          user.password as string
-        );
-        if (!checkPassword) return null;
+        if (user.password) {
+          const checkPassword = await bcrypt.compare(
+            credentials?.password,
+            user.password as string
+          );
+          if (!checkPassword) {
+            throw new Error("Password is incorrect");
+          }
+        } else
+          throw new Error(
+            "User with this email is registred to another account type "
+          );
 
         return user;
       },
@@ -47,11 +55,21 @@ export const authOptions = {
       clientSecret: process.env.GITHUB_SECRET as string,
     }),
     //google session provider
+    GoogleProvider({
+      clientId: process.env.GOOGLE_ID as string,
+      clientSecret: process.env.GOOGLE_SECRET as string,
+    }),
   ],
   session: {
     strategy: "jwt",
     maxAge: 3600,
   },
+
+  pages: {
+    signIn: "/auth/login",
+    error: "/auth/error",
+  },
+
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === "development",
 } satisfies NextAuthOptions;

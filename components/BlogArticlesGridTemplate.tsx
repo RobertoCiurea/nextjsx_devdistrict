@@ -105,36 +105,44 @@ const BlogArticlesGridTemplate = () => {
     },
   ];
   return (
-    <div className="flex flex-col items-center">
-      <section className="mx-4 gap-10   grid place-items-center grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
-        {blogs.slice(0, limit).map((blog, index) => (
-          <BlogCard
-            title={blog.tittle}
-            content={blog.content}
-            username={blog.username}
-            userid={blog.userdId}
-            likesCnt={blog.likesCnt}
-            commentsCnt={blog.commentsCnt}
-            loading={blog.loading}
-            key={index}
-          />
-        ))}
-      </section>
-      <div
-        className="flex justify-center items-center cursor-pointer my-5"
-        onClick={handleShowingBlogArticlesState}
+    <>
+      <h1
+        id="targetSection"
+        className="text-2xl sm:text-3xl py-5 font-semibold font-Raleway text-white ml-10 lg:ml-7 mb-10"
       >
-        <p className="text-xl mx-3 text-white font-Montserrat font-semibold">
-          Show {limit === 4 ? "more" : "less"}
-        </p>
-        <Image
-          src={DownArrow}
-          alt="Arrow"
-          width={22}
-          className={`${buttonShowStyles}`}
-        />
+        Popular posts
+      </h1>
+      <div className="flex flex-col items-center gap-10">
+        <section className="mx-4 gap-10   grid place-items-center grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
+          {blogs.slice(0, limit).map((blog, index) => (
+            <BlogCard
+              title={blog.tittle}
+              content={blog.content}
+              username={blog.username}
+              userid={blog.userdId}
+              likesCnt={blog.likesCnt}
+              commentsCnt={blog.commentsCnt}
+              loading={blog.loading}
+              key={index}
+            />
+          ))}
+        </section>
+        <div
+          className="flex justify-center items-center cursor-pointer my-5"
+          onClick={handleShowingBlogArticlesState}
+        >
+          <p className="text-xl mx-3 text-white font-Montserrat font-semibold">
+            Show {limit === 4 ? "more" : "less"}
+          </p>
+          <Image
+            src={DownArrow}
+            alt="Arrow"
+            width={22}
+            className={`${buttonShowStyles}`}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

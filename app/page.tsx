@@ -8,15 +8,8 @@ export default async function Home() {
   // console.log(session?.user?.image);
   return (
     <div>
-      <Banner />
-      <h1 className="text-2xl sm:text-3xl  font-semibold font-Raleway text-white ml-10 lg:ml-7 mb-10">
-        Popular posts
-      </h1>
+      <Banner />z
       <BlogArticlesGridTemplate />
-      <h1 className="text-2xl sm:text-3xl  font-semibold font-Raleway text-white ml-10 lg:ml-7 mb-10">
-        Bugs and <br className="block md:hidden" />
-        problems
-      </h1>
       <BugArticlesGridTemplate />
     </div>
   );

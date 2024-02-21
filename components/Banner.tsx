@@ -29,9 +29,7 @@ const Banner = () => {
           Explore More
         </button>
       </div>
-      <section className="hidden md:block absolute right-20 bottom-16 ">
-        <ReportProblem />
-      </section>
+      <section className="absolute right-2 bottom-18 sm:right-20 sm:bottom-16 "></section>
     </div>
   );
 };

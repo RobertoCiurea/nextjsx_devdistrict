@@ -66,7 +66,7 @@ const RegisterWithEmail = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           type="text"
-          className="w-full p-1 md:p-2 pl-2 focus:outline-none focus:border-none focus:outline-2 focus:outline-primaryAccent text-md md:text-xl rounded-lg text-centers"
+          className="w-full bg-backgroundAccent text-white p-1 md:p-2 pl-2 focus:outline-none focus:border-none focus:outline-2 focus:outline-primaryGray text-md md:text-xl rounded-lg text-centers"
           placeholder="yourname"
           name="name"
           required
@@ -75,7 +75,7 @@ const RegisterWithEmail = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           type="email"
-          className="w-full p-1 md:p-2 pl-2 focus:outline-none focus:border-none focus:outline-2 focus:outline-primaryAccent text-md md:text-xl rounded-lg text-centers"
+          className="w-full bg-backgroundAccent text-white p-1 md:p-2 pl-2 focus:outline-none focus:border-none focus:outline-2 focus:outline-primaryGray text-md md:text-xl rounded-lg text-centers"
           placeholder="email@example.com"
           name="email"
           required
@@ -84,7 +84,7 @@ const RegisterWithEmail = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           type="password"
-          className="w-full p-1 md:p-2 pl-2 focus:outline-none focus:border-none focus:outline-2 focus:outline-primaryAccent text-md md:text-xl rounded-lg text-centers"
+          className="w-full bg-backgroundAccent text-white p-1 md:p-2 pl-2 focus:outline-none focus:border-none focus:outline-2 focus:outline-primaryGray text-md md:text-xl rounded-lg text-centers"
           placeholder="password"
           name="password"
           required

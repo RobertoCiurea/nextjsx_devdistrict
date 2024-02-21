@@ -12,13 +12,27 @@ const initialState = {
   status: 0,
   url: null,
 };
-const LoginWithEmail = () => {
+type PropsTypes = {
+  inputStyles: string;
+  buttonStyles: string;
+};
+const LoginWithEmail = ({ inputStyles, buttonStyles }: PropsTypes) => {
   const { pending } = useFormStatus();
   const [state, formAction] = useFormState(handleLoginAction, initialState);
-
   if (state?.status === 200) {
     redirect("/");
-  } else if (state?.status === 500) {
+  } else if (state?.status === undefined) {
+    toast.error("Something went wrong. Please try again!", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  } else if (state?.status >= 200) {
     toast.error(state?.error, {
       position: "bottom-right",
       autoClose: 5000,
@@ -33,24 +47,24 @@ const LoginWithEmail = () => {
 
   return (
     <>
-      <form className="flex flex-col items-center gap-3" action={formAction}>
+      <form className="flex flex-col items-center gap-7" action={formAction}>
         <input
           type="email"
-          className="w-full p-1 md:p-2 pl-2 focus:outline-none focus:border-none focus:outline-2 focus:outline-primaryAccent text-md md:text-xl rounded-lg text-centers"
+          className={`w-full bg-backgroundAccent text-white focus:border-none focus:outline-none focus:outline-2 focus:outline-primaryGray rounded-lg ${inputStyles} `}
           placeholder="email@example.com"
           name="email"
           required
         />
         <input
           type="password"
-          className="w-full p-1 md:p-2 pl-2 focus:outline-none focus:border-none focus:outline-2 focus:outline-primaryAccent text-md md:text-xl rounded-lg text-centers"
+          className={`w-full bg-backgroundAccent text-white focus:border-none focus:outline-none focus:outline-2 focus:outline-primaryGray rounded-lg ${inputStyles} `}
           placeholder="password"
           name="password"
           required
         />
         <button
           type="submit"
-          className="m-2 w-full bg-primaryAccent p-2 text-white font-semibold text-lg md:text-xl rounded-lg mx-auto hover:bg-primaryAccentHover hover:text-gray-300"
+          className={`m-2 w-full bg-primaryAccent  text-white font-semibold  rounded-lg mx-auto hover:bg-primaryAccentHover hover:text-gray-300 ${buttonStyles}`}
           aria-disabled={pending}
         >
           Login with Email

@@ -7,6 +7,7 @@ import Forbidden from "@/components/Forbidden";
 import Link from "next/link";
 const page = async () => {
   const session = await getSession();
+
   if (session?.user)
     return (
       <Forbidden
@@ -27,7 +28,10 @@ const page = async () => {
       {/*Login with email section */}
       <div>
         <h1 className="text-white py-2 text-lg md:text-xl">Login with email</h1>
-        <LoginWithEmail />
+        <LoginWithEmail
+          inputStyles="p-1 md:p-2 pl-2 focus:outline-none  text-md md:text-xl"
+          buttonStyles=" p-2 text-lg md:text-xl"
+        />
       </div>
       {/*Login with github */}
       <div>
@@ -38,8 +42,8 @@ const page = async () => {
           Or
         </h1>
         <div className="flex flex-col gap-5 mt-3">
-          <LoginWithGithub />
-          <LoginwithGoogle />
+          <LoginWithGithub styles="p-2 text-md md:text-xl " imgWidth={75} />
+          <LoginwithGoogle styles="text-md p-2 md:text-xl" imgWidth={75} />
         </div>
       </div>
       {/*link to the register page */}

@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         ...colors,
         background: "var(--bg-primary)",
+        backgroundAccent: "var(--bg-accent)",
         primaryAccent: "var(--primary-accent)",
         primaryAccentHover: "var(--primary-accent-hover)",
         primaryGray: "var(--primary-gray)",

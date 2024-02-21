@@ -1,12 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import Image from "next/image";
 import Logo from "@/public/images/devdistrict_logo.png";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import ReportProblem from "./ReportProblem";
 
 const Header = () => {
   const session = useSession();
@@ -26,13 +25,13 @@ const Header = () => {
       </Link>
 
       {/*if no session render login button else render hamburger menu on mobile or the dekstop version */}
-      {session.data?.user ? (
+      {session.data ? (
         <>
           <div className="block md:hidden">
             <HamburgerMenu imgSrc={imgSrc as string} />
           </div>
-          <div className="hidden md:flex items-center gap-5 flex-shrink">
-            <div className="flex flex-col">
+          {session.data?.user && (
+            <div className="hidden md:flex items-center gap-5 flex-shrink">
               <Image
                 className="hidden md:block rounded-full"
                 src={imgSrc as string}
@@ -40,14 +39,15 @@ const Header = () => {
                 width={70}
                 height={70}
               />
+
+              <button
+                className="font-Raleway text-lg p-3 text-center  text-primaryAccent rounded-full font-bold bg-white shadow-lg shadow-white/35 hover:bg-slate-200 hover:shadow-white/30"
+                onClick={() => signOut({ callbackUrl: "/auth/login" })}
+              >
+                Sign out
+              </button>
             </div>
-            <button
-              className="font-Raleway text-lg p-3 text-center  text-primaryAccent rounded-full font-bold bg-white shadow-lg shadow-white/35 hover:bg-slate-200 hover:shadow-white/30"
-              onClick={() => signOut({ callbackUrl: "/auth/login" })}
-            >
-              Sign out
-            </button>
-          </div>
+          )}
         </>
       ) : (
         <Link href="/auth/login">
@@ -96,7 +96,6 @@ const HamburgerMenu = ({ imgSrc }: ImageSource) => {
               Sign out
             </button>
             {/*report a problem component */}
-            <ReportProblem />
           </div>
         </>
       ) : (

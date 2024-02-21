@@ -6,7 +6,6 @@ export const handleLoginAction = async (prevState: any, formData: FormData) => {
       email: formData.get("email"),
       password: formData.get("password"),
     };
-    console.log(data);
     const res = await signIn("credentials", {
       ...data,
       callbackUrl: "/",

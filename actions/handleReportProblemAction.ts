@@ -8,9 +8,9 @@ export const handleReportProblemAction = async (
   try {
     const title = formData.get("title");
     const description = formData.get("description");
-    const status = formData.get("level");
+    const condition = formData.get("level");
     const userid = formData.get("userid");
-    if (title === "" || description === "" || status === "") {
+    if (title === "" || description === "" || condition === "") {
       console.log("Empty fields");
       return { status: 404, message: "You must complete all the fields" };
     } else {
@@ -18,7 +18,7 @@ export const handleReportProblemAction = async (
         data: {
           title: title as string,
           description: description as string,
-          status: status as string,
+          condition: condition as string,
           userId: userid as string,
         },
       });

@@ -59,7 +59,7 @@ const ReportProblem = ({ userId }: String | any) => {
     handleReportProblemAction,
     initialState
   );
-  console.log(userId);
+
   const [isOpen, setIsOpen] = useState(false);
   const [level, setLevel] = useState(null);
   const closeModal = () => {

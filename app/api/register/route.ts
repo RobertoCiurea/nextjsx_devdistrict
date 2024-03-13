@@ -15,11 +15,20 @@ export async function POST(req: Request) {
     });
 
   //check if there is already a user registred in database
-  const user = await prisma?.user.findUnique({
+  const user = await prisma?.user.findFirst({
     where: {
-      email: email,
+      OR: [
+        {
+          name: name,
+        },
+        {
+          email: email,
+        },
+      ],
     },
   });
+  console.log("User is: ");
+  console.log(user);
   // console.log(user);
   if (user) {
     console.log("use already exists");

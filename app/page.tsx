@@ -8,7 +8,99 @@ export default async function Home() {
   // console.log(session);
   // console.log(session?.user?.image);
   const userId = await session?.user.id;
-  console.log(userId);
+
+  const blogs = [
+    {
+      title: "title",
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
+      username: "User3251",
+      likesCnt: 2,
+      commentsCnt: 1,
+      userId: "1a",
+      loading: true,
+    },
+    {
+      title: "title",
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
+      username: "User3251",
+      likesCnt: 2,
+      commentsCnt: 1,
+      userId: "1a",
+      loading: false,
+    },
+    {
+      title: "title",
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
+      username: "User3251",
+      likesCnt: 2,
+      commentsCnt: 1,
+      userId: "1a",
+      loading: false,
+    },
+    {
+      title: "title",
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
+      username: "User3251",
+      likesCnt: 2,
+      commentsCnt: 1,
+      userId: "1a",
+      loading: false,
+    },
+    {
+      title: "title",
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
+      username: "User3251",
+      likesCnt: 2,
+      commentsCnt: 1,
+      userId: "1a",
+      loading: false,
+    },
+    {
+      title: "title",
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
+      username: "User3251",
+      likesCnt: 2,
+      commentsCnt: 1,
+      userId: "1a",
+      loading: false,
+    },
+    {
+      title: "title",
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
+      username: "User3251",
+      likesCnt: 2,
+      commentsCnt: 1,
+      userId: "1a",
+      loading: false,
+    },
+    {
+      title: "title",
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
+      username: "User3251",
+      likesCnt: 2,
+      commentsCnt: 1,
+      userId: "1a",
+      loading: false,
+    },
+    {
+      title: "title",
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
+      username: "User3251",
+      likesCnt: 2,
+      commentsCnt: 1,
+      userId: "1a",
+      loading: false,
+    },
+  ];
   return (
     <div className="relative">
       <Banner />
@@ -16,7 +108,7 @@ export default async function Home() {
         <ReportProblem userId={userId} />
       </div>
 
-      <BlogArticlesGridTemplate />
+      <BlogArticlesGridTemplate arr={blogs} label={" Popular posts"} />
       <BugArticlesGridTemplate />
     </div>
   );

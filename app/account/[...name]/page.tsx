@@ -3,9 +3,7 @@ const prisma = new PrismaClient();
 import { getSession } from "@/app/utils/getSession";
 import AccountHeader from "@/components/AccountHeader";
 import AccountContentList from "@/components/AccountContentList";
-import CreateIcon from "@/public/icons/create_icon.svg";
-import Link from "next/link";
-import Button from "@/components/Button";
+import SelectPostType from "@/components/SelectPostType";
 const page = async ({ params }: { params: { name: string | any } }) => {
   const { name } = params;
 
@@ -25,18 +23,11 @@ const page = async ({ params }: { params: { name: string | any } }) => {
         />
         <AccountContentList
           isMyAccount={session?.user.name === userQuery.name}
-          username={userQuery.name}
+          username={userQuery.name as string}
         />
         {session?.user.name === userQuery.name && (
           <div className="flex justify-center">
-            <Link href="/">
-              <Button
-                title="New post"
-                image={CreateIcon}
-                buttonStyles="text-white font-Raleway"
-                styles="hover:shadow-2xl hover:bg-primaryAccentHover bg-primaryAccent rounded-xl shadow-xl"
-              />
-            </Link>
+            <SelectPostType />
           </div>
         )}
       </div>

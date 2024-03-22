@@ -15,21 +15,13 @@ const RegisterWithEmail = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatedPassword, setRepeatedPassword] = useState("");
 
   const handleRegisterRequest = async () => {
     try {
       const data = { name, email, password };
-      const response = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ data }),
-      });
-      const userData = await response.json();
-      if (userData.status === 200) router.push("/");
-      else
-        toast.error(`${userData.message}. Please try again!`, {
+      if (password !== repeatedPassword) {
+        toast.error(`Passwords does not match`, {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -39,6 +31,41 @@ const RegisterWithEmail = () => {
           progress: undefined,
           theme: "dark",
         });
+      } else {
+        const response = await fetch("/api/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ data }),
+        });
+        const userData = await response.json();
+
+        if (userData.status === 400)
+          toast.error(`${userData.message}. Please try again!`, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+        else if (!userData.status) {
+          toast.success(`Success! Now login to your account`, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+          router.push("/auth/login");
+        }
+      }
     } catch (error) {
       console.log(error);
     }
@@ -86,6 +113,15 @@ const RegisterWithEmail = () => {
           type="password"
           className="w-full bg-backgroundAccent text-white p-1 md:p-2 pl-2 focus:outline-none focus:border-none focus:outline-2 focus:outline-primaryGray text-md md:text-xl rounded-lg text-centers"
           placeholder="password"
+          name="password"
+          required
+        />
+        <input
+          value={repeatedPassword}
+          onChange={(e) => setRepeatedPassword(e.target.value)}
+          type="password"
+          className="w-full bg-backgroundAccent text-white p-1 md:p-2 pl-2 focus:outline-none focus:border-none focus:outline-2 focus:outline-primaryGray text-md md:text-xl rounded-lg text-centers"
+          placeholder="repeat password"
           name="password"
           required
         />

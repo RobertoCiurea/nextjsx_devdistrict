@@ -15,7 +15,10 @@ const HeaderUserSection = () => {
       </div>
       {session?.data?.user && (
         <div className="hidden md:flex items-center gap-5 flex-shrink">
-          <Link href={`/account/${session.data.user.name}`}>
+          <Link
+            href="/account/[name]"
+            as={`/account/${session.data.user?.name}`}
+          >
             <Image
               className="hidden md:block rounded-full"
               src={session.data.user.image as string}

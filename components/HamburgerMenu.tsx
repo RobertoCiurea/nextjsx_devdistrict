@@ -25,7 +25,8 @@ const HamburgerMenu = () => {
           </div>
           <div className="text-white  absolute top-30 right-5 mt-2 p-3 rounded-lg  pr-5 bg-background flex z-10 flex-col items-end">
             <Link
-              href={`/account/${session.data?.user}`}
+              href="/account/[name]"
+              as={`/account/${session.data?.user?.name}`}
               onClick={() => setHamburgerActive(false)}
             >
               <div className="flex items-center justify-center gap-5">

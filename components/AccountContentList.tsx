@@ -5,12 +5,32 @@ import Link from "next/link";
 import { Tab } from "@headlessui/react";
 import BlogArticlesGridTemplate from "./BlogArticlesGridTemplate";
 import ReportCard from "./ReportCard";
+
+type BlogTag = {
+  id: string;
+  name: string;
+  blogPostId: string;
+};
+type BlogType = {
+  id: string;
+  title: string;
+  content: string;
+  username: string;
+  likesCounter: number | any;
+  commentsCounter: number | any;
+  userId: string;
+  tags: BlogTag[];
+  loading?: boolean;
+};
+
 const AccountContentList = ({
   isMyAccount,
   username,
+  blogPosts,
 }: {
   isMyAccount: boolean;
   username: string;
+  blogPosts: BlogType[];
 }) => {
   const [output, setOutput] = useState(0);
   const labels = [
@@ -32,38 +52,38 @@ const AccountContentList = ({
     },
   ];
   //user content
-  const posts = [
-    {
-      title: "title",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      likesCnt: 2,
-      commentsCnt: 1,
-      userId: "1a",
-      loading: false,
-    },
-    {
-      title: "title",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      likesCnt: 2,
-      commentsCnt: 1,
-      userId: "1a",
-      loading: false,
-    },
-    {
-      title: "title",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      likesCnt: 2,
-      commentsCnt: 1,
-      userId: "1a",
-      loading: false,
-    },
-  ];
+  // const posts = [
+  //   {
+  //     title: "title",
+  //     content:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
+  //     username: "User3251",
+  //     likesCnt: 2,
+  //     commentsCnt: 1,
+  //     userId: "1a",
+  //     loading: false,
+  //   },
+  //   {
+  //     title: "title",
+  //     content:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
+  //     username: "User3251",
+  //     likesCnt: 2,
+  //     commentsCnt: 1,
+  //     userId: "1a",
+  //     loading: false,
+  //   },
+  //   {
+  //     title: "title",
+  //     content:
+  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
+  //     username: "User3251",
+  //     likesCnt: 2,
+  //     commentsCnt: 1,
+  //     userId: "1a",
+  //     loading: false,
+  //   },
+  // ];
   const favorites = [
     {
       title: "title",
@@ -251,7 +271,7 @@ const AccountContentList = ({
       {/*Post, favorites, followers or reports grid template */}
       <div className="flex justify-center flex-col">
         <ShowPosts
-          posts={posts}
+          posts={blogPosts}
           favorites={favorites}
           followers={followers}
           reports={reports}

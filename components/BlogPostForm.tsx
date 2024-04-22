@@ -10,7 +10,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CheckIcon from "@/public/icons/check_icon.svg";
 
-const BlogPostForm = ({ userId }: { userId: string }) => {
+const BlogPostForm = ({
+  userId,
+  username,
+}: {
+  userId: string;
+  username: string;
+}) => {
   const [selectedTag, setSelectedTag] = useState<string>("");
   const [tagsList, setTagsList] = useState<{ id: string; name: string }[]>([]);
   const [title, setTitle] = useState("");
@@ -66,7 +72,7 @@ const BlogPostForm = ({ userId }: { userId: string }) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const data = { title, content, userId, tagsList };
+      const data = { title, content, userId, username, tagsList };
       const response = await fetch("/api/blogPost", {
         method: "POST",
         headers: {
@@ -85,6 +91,7 @@ const BlogPostForm = ({ userId }: { userId: string }) => {
     setTagsList([]);
     setQuery("");
   }
+  //manage notifications (user feedback)
   useEffect(() => {
     switch (status) {
       case 200:

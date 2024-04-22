@@ -8,7 +8,10 @@ const page = async () => {
     return (
       <div className="flex flex-col flex-shrink mx-5 sm:mx-10 text-white font-Montserrat items-center my-[33px] ">
         <h1 className="text-xl md:text-2xl font-bold">Create new blog post</h1>
-        <BlogPostForm userId={session.user.id as string} />
+        <BlogPostForm
+          userId={session.user.id as string}
+          username={session.user.name as string}
+        />
       </div>
     );
   } else {

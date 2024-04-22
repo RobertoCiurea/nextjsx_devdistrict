@@ -12,6 +12,14 @@ const page = async ({ params }: { params: { name: string | any } }) => {
       name: name[0],
     },
   });
+  const blogPosts = await prisma.blogPost.findMany({
+    where: {
+      username: name[0],
+    },
+    include: {
+      tags: true,
+    },
+  });
   const session = await getSession();
 
   if (userQuery) {
@@ -24,6 +32,7 @@ const page = async ({ params }: { params: { name: string | any } }) => {
         <AccountContentList
           isMyAccount={session?.user.name === userQuery.name}
           username={userQuery.name as string}
+          blogPosts={blogPosts}
         />
         {session?.user.name === userQuery.name && (
           <div className="flex justify-center">

@@ -9,7 +9,7 @@ type TagType = {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { title, content, userId, tagsList } = await body.data;
+    const { title, content, userId, username, tagsList } = await body.data;
     if (!title || !content) {
       return new Response("You must complete all the fields", {
         status: 400,
@@ -20,6 +20,7 @@ export async function POST(req: Request) {
           title: title as string,
           content: content as string,
           userId: userId,
+          username: username,
           tags: {
             create: tagsList.map((tag: TagType) => ({
               name: tag.name,
@@ -27,10 +28,11 @@ export async function POST(req: Request) {
           },
         },
       });
-      console.log(blogPost);
-      return new Response("Blog post created successfully", {
-        status: 200,
-      });
+      if (blogPost) {
+        return new Response("Blog post created successfully", {
+          status: 200,
+        });
+      }
     }
   } catch (error) {
     console.log(error);

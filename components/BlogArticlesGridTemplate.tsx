@@ -13,13 +13,20 @@ const BlogArticlesGridTemplate = ({ arr, label }: any) => {
     else setLimit(4);
   };
 
+  type BlogTag = {
+    id: string;
+    name: string;
+    blogPostId: string;
+  };
   type BlogType = {
+    id: string;
     title: string;
     content: string;
     username: string;
-    likesCnt: number | any;
-    commentsCnt: number | any;
+    likesCounter: number | any;
+    commentsCounter: number | any;
     userId: string;
+    tags: BlogTag[];
     loading: boolean;
   };
 
@@ -32,18 +39,20 @@ const BlogArticlesGridTemplate = ({ arr, label }: any) => {
         {label}
       </h1>
       <div className="flex flex-col items-center gap-10">
-        <section className="mx-4 gap-10   grid place-items-center grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
+        <section className="mx-4 gap-10  grid place-items-center items-center grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
           {arr.length > 0 ? (
             arr
               .slice(0, limit)
               .map((blog: BlogType, index: number) => (
                 <BlogCard
+                  id={blog.id}
                   title={blog.title}
                   content={blog.content}
                   username={blog.username}
                   userid={blog.userId}
-                  likesCnt={blog.likesCnt}
-                  commentsCnt={blog.commentsCnt}
+                  likesCnt={blog.likesCounter}
+                  commentsCnt={blog.commentsCounter}
+                  tags={blog.tags}
                   loading={blog.loading}
                   key={index}
                 />

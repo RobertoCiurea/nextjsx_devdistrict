@@ -59,7 +59,7 @@ model User {
   sessions      Session[]
   reports       Report[]
   blogPosts     BlogPost[]
-  
+  favoriteBlogPosts BlogPost[] @relation("UserFavoriteBlogPosts")
  
 }
 model BlogPost{
@@ -71,8 +71,10 @@ commentsCounter Int @default(0)
 createdAt       DateTime @default(now())
 comments        Comment[]
 userId          String
+username        String
 user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
-tags            Tag[]   
+tags            Tag[] 
+favoritedBy     User[] @relation("UserFavoriteBlogPosts")
  
 
 }
@@ -94,10 +96,19 @@ model Comment{
   author     String 
   content    String
   createdAt  DateTime @default(now())
+  replies    Reply[]
   blogPostId String 
   blogPost   BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
 }
 
+model Reply{
+  id         String @id @default(cuid())
+  author     String
+  content    String
+  createdAt  DateTime @default(now())
+  commentId  String
+  comment    Comment @relation(fields: [commentId], references: [id], onDelete: Cascade) 
+}
 
 model VerificationToken {
   identifier String

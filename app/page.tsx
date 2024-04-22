@@ -3,104 +3,22 @@ import Banner from "@/components/Banner";
 import BlogArticlesGridTemplate from "@/components/BlogArticlesGridTemplate";
 import BugArticlesGridTemplate from "@/components/BugArticlesGridTemplate";
 import ReportProblem from "@/components/ReportProblem";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 export default async function Home() {
   const session = await getSession();
   // console.log(session);
   // console.log(session?.user?.image);
   const userId = await session?.user.id;
 
-  const blogs = [
-    {
-      title: "title",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      likesCnt: 2,
-      commentsCnt: 1,
-      userId: "1a",
-      loading: true,
+  const blogs = await prisma.blogPost.findMany({
+    include: {
+      tags: true,
     },
-    {
-      title: "title",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      likesCnt: 2,
-      commentsCnt: 1,
-      userId: "1a",
-      loading: false,
-    },
-    {
-      title: "title",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      likesCnt: 2,
-      commentsCnt: 1,
-      userId: "1a",
-      loading: false,
-    },
-    {
-      title: "title",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      likesCnt: 2,
-      commentsCnt: 1,
-      userId: "1a",
-      loading: false,
-    },
-    {
-      title: "title",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      likesCnt: 2,
-      commentsCnt: 1,
-      userId: "1a",
-      loading: false,
-    },
-    {
-      title: "title",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      likesCnt: 2,
-      commentsCnt: 1,
-      userId: "1a",
-      loading: false,
-    },
-    {
-      title: "title",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      likesCnt: 2,
-      commentsCnt: 1,
-      userId: "1a",
-      loading: false,
-    },
-    {
-      title: "title",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      likesCnt: 2,
-      commentsCnt: 1,
-      userId: "1a",
-      loading: false,
-    },
-    {
-      title: "title",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      likesCnt: 2,
-      commentsCnt: 1,
-      userId: "1a",
-      loading: false,
-    },
-  ];
+  });
+
+  // console.log(blogs);
+
   return (
     <div className="relative">
       <Banner />

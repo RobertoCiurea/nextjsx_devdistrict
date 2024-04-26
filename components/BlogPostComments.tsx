@@ -35,7 +35,7 @@ const BlogPostComments = ({
   comments,
 }: {
   blogPostId: string | undefined;
-  comments: CommentType[];
+  comments: CommentType[] | any;
 }) => {
   const [state, formAction] = useFormState(addBlogPostComment, initialState);
   const session = useSession();
@@ -110,6 +110,7 @@ const BlogPostComments = ({
           defaultValue={user?.name as string}
           hidden
         />
+
         <input name="blogPostId" type="text" defaultValue={blogPostId} hidden />
         <CommentButton />
       </form>
@@ -118,7 +119,7 @@ const BlogPostComments = ({
         {comments.length === 0 ? (
           <h1>No comments yet</h1>
         ) : (
-          comments.map((comment) => (
+          comments.map((comment: CommentType) => (
             <Comment
               key={comment.id}
               id={comment.id}

@@ -37,7 +37,7 @@ const BlogCard = ({
   loading,
 }: BlogCardProps) => {
   const [clicked, setClicked] = useState(false);
-  console.log(tags);
+
   const handleUpvoteClick = () => {
     setClicked((prevClicked) => !prevClicked);
   };

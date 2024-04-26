@@ -39,6 +39,14 @@ export const addBlogPostComment = async (
         blogPostId: blogPostId as string,
       },
     });
+    const updatedPost = await prisma.blogPost.update({
+      where: { id: blogPostId as string },
+      data: {
+        commentsCounter: {
+          increment: 1,
+        },
+      },
+    });
     revalidatePath("blog-posts/[id]");
     if (comment) {
       return {

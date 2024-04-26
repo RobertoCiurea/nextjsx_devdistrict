@@ -27,10 +27,12 @@ const AccountContentList = ({
   isMyAccount,
   username,
   blogPosts,
+  favoriteBlogPosts,
 }: {
   isMyAccount: boolean;
   username: string;
   blogPosts: BlogType[];
+  favoriteBlogPosts: BlogType[];
 }) => {
   const [output, setOutput] = useState(0);
   const labels = [
@@ -272,7 +274,7 @@ const AccountContentList = ({
       <div className="flex justify-center flex-col">
         <ShowPosts
           posts={blogPosts}
-          favorites={favorites}
+          favorites={favoriteBlogPosts}
           followers={followers}
           reports={reports}
           output={output}

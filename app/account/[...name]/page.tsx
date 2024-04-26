@@ -7,9 +7,16 @@ import SelectPostType from "@/components/SelectPostType";
 const page = async ({ params }: { params: { name: string | any } }) => {
   const { name } = params;
 
-  const userQuery = await prisma.user.findFirst({
+  const userQuery = await prisma.user.findUnique({
     where: {
       name: name[0],
+    },
+    include: {
+      favoriteBlogPosts: {
+        include: {
+          tags: true,
+        },
+      },
     },
   });
   const blogPosts = await prisma.blogPost.findMany({
@@ -21,7 +28,7 @@ const page = async ({ params }: { params: { name: string | any } }) => {
     },
   });
   const session = await getSession();
-
+  console.log(userQuery?.favoriteBlogPosts);
   if (userQuery) {
     return (
       <div className="flex flex-col gap-20">
@@ -33,6 +40,7 @@ const page = async ({ params }: { params: { name: string | any } }) => {
           isMyAccount={session?.user.name === userQuery.name}
           username={userQuery.name as string}
           blogPosts={blogPosts}
+          favoriteBlogPosts={userQuery.favoriteBlogPosts}
         />
         {session?.user.name === userQuery.name && (
           <div className="flex justify-center">

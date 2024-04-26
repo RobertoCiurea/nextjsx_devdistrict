@@ -1,13 +1,16 @@
 import React from "react";
-import Button from "@/components/Button";
-import FavoriteIcon from "@/public/icons/favorite_icon.svg";
-import FavoriteIconFocused from "@/public/icons/favorite_icon_focus.svg";
-import BlogPostCommentForm from "@/components/BlogPostComments";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 import BlogPostComments from "@/components/BlogPostComments";
+import { getSession } from "@/app/utils/getSession";
+import AddBlogPostToFavorite from "@/components/AddBlogPostToFavorite";
+
 const page = async ({ params }: { params: { id: string | any } }) => {
   const blogPostId = params.id[0];
+  const session = await getSession();
+  //useformstate hook
 
-  const blogPost = await prisma?.blogPost.findUnique({
+  const blogPost = await prisma.blogPost.findUnique({
     where: {
       id: blogPostId,
     },
@@ -20,7 +23,19 @@ const page = async ({ params }: { params: { id: string | any } }) => {
       },
     },
   });
-  const addedToFavorites = false;
+  const userId = session?.user ? session.user.id : "";
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    include: {
+      favoriteBlogPosts: true,
+    },
+  });
+  const checkForFavorite = () => {
+    return user?.favoriteBlogPosts.some((post) => post.id === blogPostId);
+  };
+
   //create the blog-post page
   return (
     <>
@@ -66,17 +81,10 @@ const page = async ({ params }: { params: { id: string | any } }) => {
           )}
         </div>
         <p className="sm:mx-40 my-20">{blogPost?.content}</p>
-        <Button
-          image={addedToFavorites ? FavoriteIconFocused : FavoriteIcon}
-          title={
-            addedToFavorites
-              ? "Post saved to favorites"
-              : "Save post to favorites"
-          }
-          buttonStyles="text-white font-Raleway"
-          styles={`${
-            addedToFavorites ? "bg-primaryAccentHover" : "bg-primaryAccent"
-          }  px-2 py-1 rounded-xl transition-colors hover:bg-primaryAccentHover shadow-xl`}
+        <AddBlogPostToFavorite
+          userId={userId}
+          blogPostId={blogPostId}
+          addedToFavorites={checkForFavorite() as boolean}
         />
         <BlogPostComments
           blogPostId={blogPost?.id}

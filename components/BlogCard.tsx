@@ -110,9 +110,11 @@ const BlogCard = ({
               </div>
             </div>
           </div>
-          <button className="bg-white text-primaryAccent font-Montserrat px-2 py-1 rounded-2xl font-bold hover:bg-gray-300 hover:text-primaryAccentHover transition-colors">
-            <Link href={`/blog-posts/${id}`}>Details</Link>
-          </button>
+          <Link href={`/blog-posts/${id}`}>
+            <button className="bg-white text-primaryAccent font-Montserrat p-2 rounded-2xl font-bold hover:bg-gray-300 hover:text-primaryAccentHover transition-colors">
+              Details
+            </button>
+          </Link>
         </div>
       </div>
     );

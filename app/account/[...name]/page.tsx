@@ -28,7 +28,7 @@ const page = async ({ params }: { params: { name: string | any } }) => {
     },
   });
   const session = await getSession();
-  console.log(userQuery?.favoriteBlogPosts);
+
   if (userQuery) {
     return (
       <div className="flex flex-col gap-20">

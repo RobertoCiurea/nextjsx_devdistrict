@@ -10,19 +10,22 @@ const Forbidden = ({ placeholder }: any) => {
   ];
   const src = Math.floor(Math.random() * srcArray.length);
   return (
-    <div className="flex flex-col items-center my-10">
+    <div className="flex flex-col gap-2 items-center my-10">
+      <h1 className="text-xl sm:text-2xl text-white font-bold">
+        You must be logged in order to access this page
+      </h1>
+
       <iframe
         src={srcArray[src]}
         width="480"
         height="270"
         className="giphy-embed w-[300px] sm:w-[800px] px-5"
       ></iframe>
-
       <Link
-        href="/auth/login"
-        className=" text-center text-md mt-10  sm: text-lg md:tex-xl lg:text-2xl text-primaryAccent font-Montserrat hover:text-primaryAccentHover"
+        href={"/auth/login"}
+        className="text-primaryAccent underline sm:text-lg hover:text-primaryAccentHover transition-colors"
       >
-        {placeholder}
+        Log in
       </Link>
     </div>
   );

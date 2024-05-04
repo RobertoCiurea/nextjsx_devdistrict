@@ -32,7 +32,6 @@ export default AddBlogPostToFavorite;
 
 const FormButton = ({ addedToFavorites }: { addedToFavorites: boolean }) => {
   const { pending } = useFormStatus();
-  console.log(pending);
   if (!pending) {
     return (
       <Button

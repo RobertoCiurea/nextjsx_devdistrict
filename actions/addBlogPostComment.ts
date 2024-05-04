@@ -47,7 +47,7 @@ export const addBlogPostComment = async (
         },
       },
     });
-    revalidatePath("blog-posts/[id]");
+    revalidatePath("blog-posts/[id]", "page");
     if (comment) {
       return {
         message: "Comment added successfully",

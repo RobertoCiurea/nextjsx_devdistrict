@@ -90,7 +90,7 @@ const BlogPostComments = ({
         handleNotification("warning", state?.message);
         break;
       case 500:
-        handleNotification("error", "");
+        handleNotification("error", state.message);
         break;
     }
   }, [state?.status, state?.message]);
@@ -127,6 +127,7 @@ const BlogPostComments = ({
               content={comment.content}
               replies={comment.replies}
               createdAt={comment.createdAt.toLocaleString()}
+              blogPostId={blogPostId as string}
             />
           ))
         )}

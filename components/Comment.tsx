@@ -27,7 +27,7 @@ type CommentType = {
   content: string;
   createdAt: Date | string;
   replies: ReplyType[];
-  blogPostId?: string;
+  blogPostId: string;
 };
 const initialState = {
   message: "",
@@ -258,6 +258,14 @@ const Comment = ({
                       defaultValue={id}
                       hidden
                     />
+
+                    <input
+                      type="text"
+                      name="blogPostId"
+                      defaultValue={blogPostId}
+                      hidden
+                    />
+
                     <span
                       className="bg-red-700 py-1 px-5 sm:px-10 rounded-lg sm:text-lg hover:bg-red-800 transition-colors cursor-pointer"
                       onClick={closeModal}

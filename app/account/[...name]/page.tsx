@@ -28,18 +28,26 @@ const page = async ({ params }: { params: { name: string | any } }) => {
     },
   });
   const session = await getSession();
+  //check if it's the user's account
+  const reports = await prisma.report.findMany({
+    where: {
+      userId: session?.user.id,
+    },
+  });
 
   if (userQuery) {
     return (
       <div className="flex flex-col gap-20">
         <AccountHeader
           user={userQuery}
+          currentUserId={session?.user.id as string}
           isMyAccount={session?.user.name === userQuery.name}
         />
         <AccountContentList
           isMyAccount={session?.user.name === userQuery.name}
           username={userQuery.name as string}
           blogPosts={blogPosts}
+          reports={reports}
           favoriteBlogPosts={userQuery.favoriteBlogPosts}
         />
         {session?.user.name === userQuery.name && (

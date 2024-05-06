@@ -23,15 +23,26 @@ type BlogType = {
   loading?: boolean;
 };
 
+type ReportType = {
+  id: string;
+  title: string;
+  description: string;
+  userId: string;
+  createdAt: Date | string | any;
+  status: string;
+  condition: string;
+};
 const AccountContentList = ({
   isMyAccount,
   username,
   blogPosts,
+  reports,
   favoriteBlogPosts,
 }: {
   isMyAccount: boolean;
   username: string;
   blogPosts: BlogType[];
+  reports: ReportType[];
   favoriteBlogPosts: BlogType[];
 }) => {
   const [output, setOutput] = useState(0);
@@ -54,100 +65,7 @@ const AccountContentList = ({
     },
   ];
   //user content
-  // const posts = [
-  //   {
-  //     title: "title",
-  //     content:
-  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-  //     username: "User3251",
-  //     likesCnt: 2,
-  //     commentsCnt: 1,
-  //     userId: "1a",
-  //     loading: false,
-  //   },
-  //   {
-  //     title: "title",
-  //     content:
-  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-  //     username: "User3251",
-  //     likesCnt: 2,
-  //     commentsCnt: 1,
-  //     userId: "1a",
-  //     loading: false,
-  //   },
-  //   {
-  //     title: "title",
-  //     content:
-  //       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-  //     username: "User3251",
-  //     likesCnt: 2,
-  //     commentsCnt: 1,
-  //     userId: "1a",
-  //     loading: false,
-  //   },
-  // ];
-  const favorites = [
-    {
-      title: "title",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      likesCnt: 2,
-      commentsCnt: 1,
-      userId: "1a",
-      loading: false,
-    },
-    {
-      title: "title",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      likesCnt: 2,
-      commentsCnt: 1,
-      userId: "1a",
-      loading: false,
-    },
-    {
-      title: "title",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      likesCnt: 2,
-      commentsCnt: 1,
-      userId: "1a",
-      loading: false,
-    },
-    {
-      title: "title",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      likesCnt: 2,
-      commentsCnt: 1,
-      userId: "1a",
-      loading: false,
-    },
-    {
-      title: "title",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      likesCnt: 2,
-      commentsCnt: 1,
-      userId: "1a",
-      loading: false,
-    },
-    {
-      title: "title",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      likesCnt: 2,
-      commentsCnt: 1,
-      userId: "1a",
-      loading: false,
-    },
-  ];
+
   const followers = [
     {
       userId: "1",
@@ -203,35 +121,6 @@ const AccountContentList = ({
       userId: "11",
       userName: "User32561",
       image: "https://api.dicebear.com/7.x/avataaars-neutral/svg?seed=Lilly",
-    },
-  ];
-  const reports = [
-    {
-      id: "1",
-      userId: "1",
-      title: "Report title",
-      description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-      condition: "Annoying",
-      status: "PENDING",
-      createdAt: "2024-03-03 17:48:02.551",
-    },
-    {
-      id: "2",
-      userId: "1",
-      title: "Report title",
-      description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-      condition: "Annoying",
-      status: "PENDING",
-      createdAt: "2024-03-03 17:48:02.551",
-    },
-    {
-      id: "3",
-      userId: "1",
-      title: "Report title",
-      description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-      condition: "Annoying",
-      status: "PENDING",
-      createdAt: "2024-03-03 17:48:02.551",
     },
   ];
 

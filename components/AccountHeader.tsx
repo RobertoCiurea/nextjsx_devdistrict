@@ -9,7 +9,10 @@ import { updateUser } from "@/actions/updateUser";
 import { useFormState, useFormStatus } from "react-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+//custom components
 import Button from "./Button";
+import Follow from "./Follow";
+
 //headlessui
 import { Dialog, Transition, Disclosure } from "@headlessui/react";
 import { signOut } from "next-auth/react";
@@ -18,6 +21,13 @@ type UserType = {
   name: string | null;
   email: string | null;
   image: string | null;
+  followersCounter: number | null;
+};
+
+type FollowType = {
+  id: string;
+  followerId: string;
+  followingId: string;
 };
 const initialState = {
   message: "",
@@ -27,9 +37,13 @@ const initialState = {
 const AccountHeader = ({
   user,
   isMyAccount,
+  currentUserId,
+  follow,
 }: {
   user: UserType;
+  currentUserId: string;
   isMyAccount: boolean;
+  follow?: FollowType | null;
 }) => {
   //get the params and check if the params match to the id received from props
 
@@ -107,7 +121,9 @@ const AccountHeader = ({
         {/*User data */}
         <div className="flex flex-col flex-start text-white">
           <h1 className="text-xl font-Montserrat">{user.name}</h1>
-          <p className="text-sm font-Raleway ">241 folowers</p>
+          <p className="text-sm font-Raleway ">
+            {user.followersCounter} folowers
+          </p>
         </div>
       </div>
       {/*Edit profile button */}
@@ -218,11 +234,10 @@ const AccountHeader = ({
           </Transition>
         </>
       ) : (
-        <Button
-          title="Follow"
-          image={FollowIcon}
-          buttonStyles="text-white font-Raleway"
-          styles="hover:shadow-2xl hover:bg-primaryAccentHover bg-primaryAccent rounded-xl shadow-xl "
+        <Follow
+          followerId={currentUserId}
+          followingId={user.id!}
+          follow={follow}
         />
       )}
       <ToastContainer

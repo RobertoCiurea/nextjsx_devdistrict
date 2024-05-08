@@ -32,17 +32,24 @@ type ReportType = {
   status: string;
   condition: string;
 };
+type UserType = {
+  id: string;
+  name: string | null;
+  image: string | null;
+};
 const AccountContentList = ({
   isMyAccount,
   username,
   blogPosts,
   reports,
+  followers,
   favoriteBlogPosts,
 }: {
   isMyAccount: boolean;
   username: string;
   blogPosts: BlogType[];
   reports: ReportType[];
+  followers: UserType[];
   favoriteBlogPosts: BlogType[];
 }) => {
   const [output, setOutput] = useState(0);
@@ -64,66 +71,6 @@ const AccountContentList = ({
       label: "Reports",
     },
   ];
-  //user content
-
-  const followers = [
-    {
-      userId: "1",
-      userName: "User32561",
-      image: "https://api.dicebear.com/7.x/avataaars-neutral/svg?seed=Lilly",
-    },
-    {
-      userId: "2",
-      userName: "User32561",
-      image: "https://api.dicebear.com/7.x/avataaars-neutral/svg?seed=Lilly",
-    },
-    {
-      userId: "3",
-      userName: "User32561",
-      image: "https://api.dicebear.com/7.x/avataaars-neutral/svg?seed=Lilly",
-    },
-    {
-      userId: "4",
-      userName: "User32561",
-      image: "https://api.dicebear.com/7.x/avataaars-neutral/svg?seed=Lilly",
-    },
-    {
-      userId: "5",
-      userName: "User32561",
-      image: "https://api.dicebear.com/7.x/avataaars-neutral/svg?seed=Lilly",
-    },
-    {
-      userId: "6",
-      userName: "User32561",
-      image: "https://api.dicebear.com/7.x/avataaars-neutral/svg?seed=Lilly",
-    },
-    {
-      userId: "7",
-      userName: "User32561",
-      image: "https://api.dicebear.com/7.x/avataaars-neutral/svg?seed=Lilly",
-    },
-    {
-      userId: "8",
-      userName: "User32561",
-      image: "https://api.dicebear.com/7.x/avataaars-neutral/svg?seed=Lilly",
-    },
-    {
-      userId: "9",
-      userName: "User32561",
-      image: "https://api.dicebear.com/7.x/avataaars-neutral/svg?seed=Lilly",
-    },
-    {
-      userId: "10",
-      userName: "User32561",
-      image: "https://api.dicebear.com/7.x/avataaars-neutral/svg?seed=Lilly",
-    },
-    {
-      userId: "11",
-      userName: "User32561",
-      image: "https://api.dicebear.com/7.x/avataaars-neutral/svg?seed=Lilly",
-    },
-  ];
-
   return (
     <section className="flex flex-col">
       <Tab.Group>
@@ -205,34 +152,35 @@ const ShowPosts = ({
   }
 };
 
-const Followers = ({ followers }: any) => {
-  type FollowerType = {
-    userId: string;
-    userName: string;
-    image: string;
-  };
+const Followers = ({ followers }: { followers: UserType[] }) => {
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10  text-white place-items-center mx-10 my-20">
-      {followers.map((follower: FollowerType) => (
-        <div key={follower.userId} className="flex items-center">
-          <Image
-            src={follower.image}
-            alt={follower.image}
-            width={50}
-            height={50}
-            className="rounded-full "
-          />
-          <div className="flex flex-col mx-2">
-            <h1>{follower.userName}</h1>
-            <Link
-              className="text-sm und text-primaryAccent transition-colors hover:text-primaryAccentHover"
-              href={`/account/${follower.userId}`}
-            >
-              View Profile
-            </Link>
+      {followers.length > 0 ? (
+        followers.map((follower: UserType) => (
+          <div key={follower.id} className="flex items-center">
+            <Image
+              src={follower.image as string}
+              alt={follower.image as string}
+              width={50}
+              height={50}
+              className="rounded-full "
+            />
+            <div className="flex flex-col mx-2">
+              <h1>{follower.name}</h1>
+              <Link
+                className="text-sm und text-primaryAccent transition-colors hover:text-primaryAccentHover"
+                href={`/account/${follower.name}`}
+              >
+                View Profile
+              </Link>
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <h1 className="text-xl text-primaryGray font-Montserrat">
+          No followers yet
+        </h1>
+      )}
     </section>
   );
 };
@@ -249,18 +197,24 @@ const Reports = ({ reports }: any) => {
   };
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 m-10 gap-10 text-white">
-      {reports.map((report: ReportType) => (
-        <ReportCard
-          key={report.id}
-          id={report.id}
-          userId={report.userId}
-          title={report.title}
-          description={report.description}
-          condition={report.condition}
-          status={report.status}
-          createdAt={report.createdAt}
-        />
-      ))}
+      {reports.length > 0 ? (
+        reports.map((report: ReportType) => (
+          <ReportCard
+            key={report.id}
+            id={report.id}
+            userId={report.userId}
+            title={report.title}
+            description={report.description}
+            condition={report.condition}
+            status={report.status}
+            createdAt={report.createdAt}
+          />
+        ))
+      ) : (
+        <h1 className="text-xl text-primaryGray font-Montserrat">
+          No reports yet
+        </h1>
+      )}
     </section>
   );
 };

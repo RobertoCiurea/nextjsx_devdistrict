@@ -11,18 +11,18 @@ datasource db {
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -37,77 +37,85 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model Report{
-  id           String @id @default(cuid())
-  title        String
-  description  String
-  status       String @default("PENDING")
-  condition    String
-  userId       String
-  createdAt    DateTime @default(now())
-  user         User @relation(fields: [userId], references: [id], onDelete: Cascade)
+model Report {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  status      String   @default("PENDING")
+  condition   String
+  userId      String
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String? @unique
-  email         String?   @unique
-  password      String?
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  reports       Report[]
-  blogPosts     BlogPost[]
+  id                String     @id @default(cuid())
+  name              String?    @unique
+  email             String?    @unique
+  password          String?
+  followersCounter  Int         @default(0)  
+  emailVerified     DateTime?
+  image             String?
+  accounts          Account[]
+  sessions          Session[]
+  reports           Report[]
+  blogPosts         BlogPost[]
   favoriteBlogPosts BlogPost[] @relation("UserFavoriteBlogPosts")
- 
-}
-model BlogPost{
-id              String @id @default(cuid())
-title           String
-content         String
-likesCounter    Int @default(0)
-commentsCounter Int @default(0)
-createdAt       DateTime @default(now())
-comments        Comment[]
-userId          String
-username        String
-user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
-tags            Tag[] 
-favoritedBy     User[] @relation("UserFavoriteBlogPosts")
- 
-
+  //users who are following this user
+  followers         Follow[]   @relation("UserFollows")
+  //users whom this user is following
+  following         Follow[]   @relation("UserFollowing")
 }
 
+model Follow {
+  id          String @id @default(cuid())
+  followerId  String
+  followingId String
+  follower    User   @relation("UserFollows", fields: [followerId], references: [id])
+  following   User   @relation("UserFollowing", fields: [followingId], references: [id])
+
+  @@unique([followerId, followingId])
+}
+
+model BlogPost {
+  id              String    @id @default(cuid())
+  title           String
+  content         String
+  likesCounter    Int       @default(0)
+  commentsCounter Int       @default(0)
+  createdAt       DateTime  @default(now())
+  comments        Comment[]
+  userId          String
+  username        String
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tags            Tag[]
+  favoritedBy     User[]    @relation("UserFavoriteBlogPosts")
+}
 
 model Tag {
-  id         String       @id @default(cuid())
-  name       String    
+  id         String   @id @default(cuid())
+  name       String
   blogPostId String
   blogPost   BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
- 
 }
 
-
-
-
-model Comment{
-  id         String @id @default(cuid())
-  author     String 
-  content    String
-  createdAt  DateTime @default(now())
-  replies    Reply[]
-  blogPostId String 
-  blogPost   BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
-}
-
-model Reply{
-  id         String @id @default(cuid())
+model Comment {
+  id         String   @id @default(cuid())
   author     String
   content    String
   createdAt  DateTime @default(now())
-  commentId  String
-  comment    Comment @relation(fields: [commentId], references: [id], onDelete: Cascade) 
+  replies    Reply[]
+  blogPostId String
+  blogPost   BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+}
+
+model Reply {
+  id        String   @id @default(cuid())
+  author    String
+  content   String
+  createdAt DateTime @default(now())
+  commentId String
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
@@ -118,8 +126,7 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-
 model Newsletter {
-  id String @id @default(cuid())
+  id    String @id @default(cuid())
   email String @unique
 }

@@ -27,11 +27,29 @@ const page = async ({ params }: { params: { name: string | any } }) => {
       tags: true,
     },
   });
+
   const session = await getSession();
   //check if it's the user's account
   const reports = await prisma.report.findMany({
     where: {
       userId: session?.user.id,
+    },
+  });
+  //check if the user is already followed
+  const followerId = session?.user.id;
+  const followingId = userQuery?.id;
+  const follow = await prisma.follow.findFirst({
+    where: {
+      followerId,
+      followingId,
+    },
+  });
+  const followers = await prisma.follow.findMany({
+    where: {
+      followingId: userQuery?.id,
+    },
+    include: {
+      follower: true,
     },
   });
 
@@ -40,6 +58,7 @@ const page = async ({ params }: { params: { name: string | any } }) => {
       <div className="flex flex-col gap-20">
         <AccountHeader
           user={userQuery}
+          follow={follow}
           currentUserId={session?.user.id as string}
           isMyAccount={session?.user.name === userQuery.name}
         />
@@ -48,6 +67,7 @@ const page = async ({ params }: { params: { name: string | any } }) => {
           username={userQuery.name as string}
           blogPosts={blogPosts}
           reports={reports}
+          followers={followers.map((follow) => follow.follower)} //map through each follower and get the actual user data
           favoriteBlogPosts={userQuery.favoriteBlogPosts}
         />
         {session?.user.name === userQuery.name && (

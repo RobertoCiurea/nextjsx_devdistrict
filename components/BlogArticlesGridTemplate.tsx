@@ -27,7 +27,6 @@ const BlogArticlesGridTemplate = ({ arr, label }: any) => {
     commentsCounter: number | any;
     userId: string;
     tags: BlogTag[];
-    loading: boolean;
   };
 
   return (
@@ -53,7 +52,6 @@ const BlogArticlesGridTemplate = ({ arr, label }: any) => {
                   likesCnt={blog.likesCounter}
                   commentsCnt={blog.commentsCounter}
                   tags={blog.tags}
-                  loading={blog.loading}
                   key={index}
                 />
               ))

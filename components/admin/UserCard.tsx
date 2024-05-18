@@ -162,7 +162,6 @@ const UserCard = ({
                             likesCnt={post.likesCounter}
                             tags={post.tags}
                             commentsCnt={post.commentsCounter}
-                            loading={false}
                           />
                           <form action={deleteBlogPost}>
                             <input

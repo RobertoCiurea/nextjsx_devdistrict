@@ -53,9 +53,10 @@ model User {
   name              String?    @unique
   email             String?    @unique
   password          String?
-  followersCounter  Int         @default(0)  
+  followersCounter  Int        @default(0)
   emailVerified     DateTime?
   image             String?
+  userType          String     @default("BASIC")
   accounts          Account[]
   sessions          Session[]
   reports           Report[]
@@ -71,8 +72,8 @@ model Follow {
   id          String @id @default(cuid())
   followerId  String
   followingId String
-  follower    User   @relation("UserFollows", fields: [followerId], references: [id])
-  following   User   @relation("UserFollowing", fields: [followingId], references: [id])
+  follower    User   @relation("UserFollows", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User   @relation("UserFollowing", fields: [followingId], references: [id], onDelete: Cascade)
 
   @@unique([followerId, followingId])
 }

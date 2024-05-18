@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import UpvoteIcon from "@/public/icons/upvote_unfocused.svg";
 import UpvoteIconGray from "@/public/icons/upvote_gray.svg";
@@ -22,7 +22,6 @@ type BlogCardProps = {
   likesCnt: number;
   commentsCnt: number;
   tags: BlogTag[];
-  loading: Boolean;
 };
 
 const BlogCard = ({
@@ -34,9 +33,15 @@ const BlogCard = ({
   likesCnt,
   commentsCnt,
   tags,
-  loading,
 }: BlogCardProps) => {
   const [clicked, setClicked] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, [loading]);
 
   const handleUpvoteClick = () => {
     setClicked((prevClicked) => !prevClicked);
@@ -121,15 +126,16 @@ const BlogCard = ({
   else
     return (
       //skeleton blog card
-      <div className="flex flex-col w-full sm:w-[500px] md:w-[400px] border-[2px] border-primaryAccentHover rounded-xl mx-10 py-1 px-2">
+      <div className="flex flex-col my-5 w-full sm:w-[500px] md:w-[400px] border-[2px] border-primaryAccentHover rounded-xl mx-10 py-1 px-2">
         {/*Top section */}
         <div className="flex justify-between  mt-2 mb-3">
           <span className="w-[150px] sm:w-[200px] h-7 bg-gradient-to-r from-gray-400 to-primaryGray rounded-xl animate-pulse"></span>
           <span className="w-[45px] h-7 bg-gradient-to-r from-gray-400 to-primaryGray rounded-xl animate-pulse"></span>
         </div>
         {/*Text content */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-5">
           <span className="w-full h-7 bg-gradient-to-r from-gray-400 to-primaryGray rounded-xl animate-pulse"></span>
+          <span className="w-xl h-7 bg-gradient-to-r from-gray-400 to-primaryGray rounded-xl animate-pulse"></span>
           <span className="w-xl h-7 bg-gradient-to-r from-gray-400 to-primaryGray rounded-xl animate-pulse"></span>
         </div>
         {/*Bottom section */}

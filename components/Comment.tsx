@@ -1,12 +1,16 @@
 "use client";
 import React, { useState, useEffect, Fragment } from "react";
+import { useFormStatus } from "react-dom";
 import Image from "next/image";
 import ReplyIcon from "@/public/icons/reply_icon.svg";
+import Button from "./Button";
 import { useFormState } from "react-dom";
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 //actions
 import { handleCommentReply } from "@/actions/handleCommentReply";
 import { deleteComment } from "@/actions/deleteComment";
+import { deleteReply } from "@/actions/deleteReply";
 //react toastify
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -44,12 +48,20 @@ const Comment = ({
   const [reply, setReply] = useState(false);
   const [state, formAction] = useFormState(handleCommentReply, initialState);
   const [isOpen, setIsOpen] = useState(false);
+  const [showReplies, setShowReplies] = useState(false);
   const session = useSession();
+  const pathname = usePathname();
   const openModal = () => {
     setIsOpen(true);
   };
   const closeModal = () => {
     setIsOpen(false);
+  };
+  const openRepliesModal = () => {
+    setShowReplies(true);
+  };
+  const closeRepliesModal = () => {
+    setShowReplies(false);
   };
   function handleNotification(type: string, message: string) {
     if (type === "success") {
@@ -110,11 +122,12 @@ const Comment = ({
         {/*The comment */}
         <span
           key={id}
-          className="sm:px-3 py-2 bg-backgroundAccent flex flex-col justify-center  rounded-lg  max-w-[500px]"
+          className="sm:px-3 py-2 bg-backgroundAccent flex flex-col justify-center shadow-xl  rounded-lg  max-w-[500px]"
         >
           {/*Delete comment button */}
-          {session.data?.user?.name === author && (
-            <div className="flex justify-end w-full mr-10">
+          <div className="flex justify-end w-full mr-10">
+            {session.data?.user?.name === author &&
+            session.data.user.name !== "ADMIN" ? (
               <Image
                 src={DeelteIcon}
                 alt="Delete comment"
@@ -122,12 +135,22 @@ const Comment = ({
                 title="Delete comment"
                 onClick={openModal}
               />
-            </div>
-          )}
-          <p className=" break-all">{content}</p>
-          <div className="flex justify-between mt-5 ">
-            <h1 className="sm:text-lg font-bold">
-              <span className="text-base font-normal">By: </span>
+            ) : (
+              session.data?.user?.name === "ADMIN" && (
+                <Button
+                  title={"Delete"}
+                  buttonStyles="bg-red-600 hover:bg-red-700 transition-colors text-white px-2 py-1 rounded-xl"
+                  styles=""
+                  handler={openModal}
+                  buttonType={"submit"}
+                />
+              )
+            )}
+          </div>
+          <p className=" break-all text-white">{content}</p>
+          <div className="flex justify-between gap-5 items-center mt-5 ">
+            <h1 className="sm:text-lg font-bold text-white">
+              <span className="text-base font-normal ">By: </span>
               {author}
             </h1>
             <div className="flex flex-col">
@@ -136,16 +159,27 @@ const Comment = ({
               </h1>
               {/*Comment reactions */}
               <span className="flex justify-end text-primaryGray gap-5">
-                <button
-                  className="flex items-center gap-1"
-                  onClick={() => setReply(true)}
-                >
-                  <h1 className="sm:text-lg underline">Reply</h1>
-                  <Image src={ReplyIcon} alt="Reply" width={20} />
-                </button>
+                {pathname !== "/admin-panel" && (
+                  <button
+                    className="flex items-center gap-1"
+                    onClick={() => setReply(true)}
+                  >
+                    <h1 className="sm:text-lg underline ">Reply</h1>
+                    <Image src={ReplyIcon} alt="Reply" width={20} />
+                  </button>
+                )}
               </span>
             </div>
           </div>
+          {/*Show replies modal for admin panel */}
+          {pathname === "/admin-panel" && (
+            <Button
+              title="Show replies"
+              styles=""
+              handler={openRepliesModal}
+              buttonStyles="bg-primaryAccent hover:bg-primaryAccentHover transition-colors rounded-xl text-white px-2 py-1 font-Montserrat my-2 shadow-xl"
+            />
+          )}
         </span>
         {/*Reply input */}
         {reply && (
@@ -182,6 +216,8 @@ const Comment = ({
         )}
         {/*The replies */}
         {replies.length > 0 &&
+          //do not display the replies in this way in admin panel
+          pathname !== "/admin-panel" &&
           replies.map((reply) => (
             <span
               key={reply.id}
@@ -199,6 +235,18 @@ const Comment = ({
                   </h1>
                 </div>
               </div>
+              {/*Delete reply button */}
+              {session.data?.user?.name === reply.author ||
+                (session.data?.user?.name === "ADMIN" && (
+                  <form action={deleteReply} className="mt-3">
+                    <input
+                      type="hidden"
+                      name="replyId"
+                      defaultValue={reply.id}
+                    />
+                    <FormButton title="Delete reply" />
+                  </form>
+                ))}
             </span>
           ))}
       </div>
@@ -215,7 +263,7 @@ const Comment = ({
         pauseOnHover
         theme="dark"
       />
-      {/*Headless ui dialog */}
+      {/*Headless ui dialog for deleting comment */}
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
@@ -286,8 +334,105 @@ const Comment = ({
           </div>
         </Dialog>
       </Transition>
+
+      {/*headless ui component for showing replies (admin-panel only) */}
+      {pathname === "/admin-panel" && (
+        <Transition appear show={showReplies} as={Fragment}>
+          <Dialog
+            as="div"
+            className="relative z-10"
+            onClose={closeRepliesModal}
+          >
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black/25" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex min-h-full items-center justify-center p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-background p-6 text-left align-middle shadow-xl transition-all">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 mb-5 text-white"
+                    >
+                      {author}'s Comment Replies
+                    </Dialog.Title>
+                    {replies.length > 0 ? (
+                      <div className="flex flex-col gap-10 justify-center items-center">
+                        {replies.map((reply) => (
+                          <span
+                            key={reply.id}
+                            className="sm:px-3 py-2 bg-backgroundAccentDark flex flex-col justify-end rounded-lg  max-w-[500px]"
+                          >
+                            <p className="mr-20 break-all text-white">
+                              {reply.content}
+                            </p>
+                            <div className="flex  justify-center gap-20 mt-5 ">
+                              <h1 className="sm:text-lg font-bold text-white">
+                                <span className="text-base font-normal">
+                                  By:{" "}
+                                </span>
+                                {reply.author}
+                              </h1>
+                              <div className="flex flex-col">
+                                <h1 className="text-primaryGray text-sm sm:text-base font-Raleway">
+                                  Created at: {reply.createdAt.toLocaleString()}
+                                </h1>
+                              </div>
+                            </div>
+                            <form action={deleteReply}>
+                              <input
+                                type="hidden"
+                                name="replyId"
+                                defaultValue={reply.id}
+                              />
+                              <FormButton title="Delete reply" />
+                            </form>
+                          </span>
+                        ))}
+                      </div>
+                    ) : (
+                      <h1 className="text-xl text-primaryGray">
+                        No replies yet
+                      </h1>
+                    )}
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition>
+      )}
     </>
   );
 };
 
 export default Comment;
+
+const FormButton = ({ title }: { title: string }) => {
+  const { pending } = useFormStatus();
+  return (
+    <Button
+      title={pending ? "Loading..." : title}
+      buttonStyles="bg-red-600 hover:bg-red-700 transition-colors text-white px-2  rounded-lg"
+      styles=""
+      buttonType={"submit"}
+    />
+  );
+};

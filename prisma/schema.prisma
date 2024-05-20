@@ -66,6 +66,10 @@ model User {
   followers         Follow[]   @relation("UserFollows")
   //users whom this user is following
   following         Follow[]   @relation("UserFollowing")
+  question          Question[]
+  solutions         Solution[]
+  //votes for each solution
+  votes             Vote[]
 }
 
 model Follow {
@@ -117,6 +121,59 @@ model Reply {
   createdAt DateTime @default(now())
   commentId String
   comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+}
+
+model Question {
+  id             String     @id @default(cuid())
+  title          String
+  description    String
+  code           String
+  language       String
+  createdAt      DateTime   @default(now())
+  author         String
+  answersCounter Int        @default(0)
+  viewsCounter   Int        @default(0)
+  userId         String
+  user           User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  solutions      Solution[]
+}
+
+model Solution {
+  id           String          @id @default(cuid())
+  content      String
+  code         String
+  language     String
+  author       String
+  createdAt    DateTime        @default(now())
+  votes        Vote[]
+  votesCounter Int             @default(0)
+  userId       String
+  user         User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questionId   String
+  question     Question        @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  replies      SolutionReply[]
+
+  @@unique([userId, questionId])
+}
+
+model Vote {
+  id         String   @id @default(cuid())
+  value      Int // 1 for upvote, -1 for downvote
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  solutionId String
+  solution   Solution @relation(fields: [solutionId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, solutionId]) // Ensure one vote per user per post
+}
+
+model SolutionReply {
+  id         String   @id @default(cuid())
+  content    String
+  author     String
+  createdAt  DateTime @default(now())
+  solutionId String
+  solution   Solution @relation(fields: [solutionId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {

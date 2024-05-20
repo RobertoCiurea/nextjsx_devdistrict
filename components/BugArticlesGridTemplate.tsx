@@ -3,62 +3,30 @@ import React, { useState } from "react";
 import BugCard from "./BugCard";
 import Image from "next/image";
 import DownArrow from "@/public/icons/down_arrow.svg";
-const BlogArticlesGridTemplate = () => {
+
+type QuestionType = {
+  id: string;
+  description: string;
+  author: string;
+  title: string;
+  answersCounter: number;
+  viewsCounter: number;
+};
+
+const BlogArticlesGridTemplate = ({
+  questions,
+}: {
+  questions: QuestionType[];
+}) => {
   const [limit, setLimit] = useState(4);
 
   const buttonShowStyles = limit === 4 ? "" : "rotate-180";
 
   const handleShowingBlogArticlesState = () => {
-    if (limit === 4) setLimit(bugsArticles.length);
+    if (limit === 4) setLimit(questions.length);
     else setLimit(4);
   };
-  const bugsArticles = [
-    {
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      answersCnt: 2,
-      viewsCnt: 198,
-      userdId: "1a",
-      loading: true,
-    },
-    {
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      answersCnt: 2,
-      viewsCnt: 198,
-      userdId: "1a",
-      loading: false,
-    },
-    {
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      answersCnt: 2,
-      viewsCnt: 198,
-      userdId: "1a",
-      loading: false,
-    },
-    {
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      answersCnt: 2,
-      viewsCnt: 198,
-      userdId: "1a",
-      loading: false,
-    },
-    {
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam malesuada posuere magna....",
-      username: "User3251",
-      answersCnt: 2,
-      viewsCnt: 198,
-      userdId: "1a",
-      loading: false,
-    },
-  ];
+
   return (
     <>
       <h1 className="text-2xl sm:text-3xl  font-semibold font-Raleway text-white ml-10 lg:ml-7 mb-10">
@@ -67,15 +35,15 @@ const BlogArticlesGridTemplate = () => {
       </h1>
       <div className="flex flex-col items-center">
         <section className="mx-4 gap-10   grid place-items-center grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
-          {bugsArticles.slice(0, limit).map((article, index) => (
+          {questions.slice(0, limit).map((article) => (
             <BugCard
-              content={article.content}
-              username={article.username}
-              userid={article.userdId}
-              answersCnt={article.answersCnt}
-              viewsCnt={article.viewsCnt}
-              loading={article.loading}
-              key={index}
+              id={article.id}
+              description={article.description}
+              author={article.author}
+              title={article.title}
+              answersCounter={article.answersCounter}
+              viewsCounter={article.viewsCounter}
+              key={article.id}
             />
           ))}
         </section>

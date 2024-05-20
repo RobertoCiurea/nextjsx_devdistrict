@@ -1,39 +1,55 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import CodeIcon from "@/public/icons/code_icon.svg";
 import ViewsIcon from "@/public/icons/views_icon.svg";
 import Image from "next/image";
+import Link from "next/link";
 
 type BugCardProps = {
-  username: string;
-  userid: string;
-  content: string;
-  answersCnt: number;
-  viewsCnt: number;
-  loading: boolean;
+  id: string;
+  author: string;
+  title: string;
+  description: string;
+  answersCounter: number;
+  viewsCounter: number;
 };
 const BugCard = ({
-  username,
-  userid,
-  content,
-  answersCnt,
-  viewsCnt,
-  loading,
+  id,
+  author,
+  title,
+  description,
+  answersCounter,
+  viewsCounter,
 }: BugCardProps) => {
+  const [loading, setLoading] = useState(false);
+  function limitText(text: string, maxLength: number): string {
+    if (text.length <= maxLength) {
+      return text;
+    } else {
+      return text.substring(0, maxLength) + "...";
+    }
+  }
+  const limitedContent = limitText(description, 100);
   if (!loading)
     return (
-      <div className="flex flex-col bg-white rounded-xl w-full md:w-[400px] px-5 py-2 m-10 sm:w-[500px] ">
+      <div className="flex flex-col justify-between bg-white rounded-xl w-full h-[250px] md:w-[400px] px-5 py-2 m-10 sm:w-[500px] ">
         {/*Top section */}
         <div className="flex justify-between">
           <Image src={CodeIcon} alt="Code Icon" width={30} />
-          <div className="flex flex-col text-primaryAccent font-Montserrat">
+          <div className="flex flex-col justify-between text-primaryAccent font-Montserrat">
             <h1 className="text-sm md:text-base">By</h1>
-            <p className="text-sm md:text-base font-bold">{username}</p>
+            <p className="text-sm md:text-base font-bold">{author}</p>
           </div>
         </div>
         {/*Middle section */}
-        <p className="text-primaryAccent p-2 font-bold font-Montserrat">
-          {content}
-        </p>
+        <div className="flex flex-col flex-shrink mt-5">
+          <h1 className="sm:text-xl text-primaryAccent font-bold border-b px-2 text-center border-gray-300">
+            {title}
+          </h1>
+          <p className="text-sm sm:text-base text-primaryAccent p-2 font-bold font-Montserrat">
+            {limitedContent}
+          </p>
+        </div>
         {/*Bottom section */}
         <div className="flex justify-between">
           {/*Left section */}
@@ -41,18 +57,20 @@ const BugCard = ({
             {/*answers */}
             <div className="flex justify-center gap-2 text-primaryGray cursor-pointer">
               <p>Answers</p>
-              <p>{answersCnt}</p>
+              <p>{answersCounter}</p>
             </div>
             {/*Views */}
             <div className="flex justify-center gap-2 text-primaryGray items-center cursor-pointer">
               <Image src={ViewsIcon} alt="Views icon" />
-              <p>{viewsCnt}</p>
+              <p>{viewsCounter}</p>
             </div>
           </div>
           {/*right button */}
-          <button className="outline-none font-Raleway border-none bg-primaryAccent rounded-xl text-lg text-white px-3 py-1 text-center hover:bg-primaryAccentHover transition-colors hover:text-gray-300">
-            Details
-          </button>
+          <Link href={`/questions/${id}`}>
+            <button className="outline-none font-Raleway border-none bg-primaryAccent rounded-xl text-lg text-white px-3 py-1 text-center hover:bg-primaryAccentHover transition-colors hover:text-gray-300">
+              Details
+            </button>
+          </Link>
         </div>
       </div>
     );

@@ -16,6 +16,7 @@ export default async function Home() {
       tags: true,
     },
   });
+  const questions = await prisma.question.findMany();
 
   // console.log(blogs);
 
@@ -27,7 +28,7 @@ export default async function Home() {
       </div>
 
       <BlogArticlesGridTemplate arr={blogs} label={" Popular posts"} />
-      <BugArticlesGridTemplate />
+      <BugArticlesGridTemplate questions={questions} />
     </div>
   );
 }

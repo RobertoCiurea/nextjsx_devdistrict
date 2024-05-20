@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 const prisma = new PrismaClient();
 
 type TagType = {
@@ -29,6 +30,7 @@ export async function POST(req: Request) {
         },
       });
       if (blogPost) {
+        revalidatePath("/", "page");
         return new Response("Blog post created successfully", {
           status: 200,
         });

@@ -1,14 +1,17 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CodeIcon from "@/public/icons/code_icon.svg";
 import ViewsIcon from "@/public/icons/views_icon.svg";
 import Image from "next/image";
 import Link from "next/link";
+//increase views
+import { viewQuestion } from "@/actions/viewQuestion";
 
 type BugCardProps = {
   id: string;
   author: string;
   title: string;
+  language: string;
   description: string;
   answersCounter: number;
   viewsCounter: number;
@@ -20,8 +23,15 @@ const BugCard = ({
   description,
   answersCounter,
   viewsCounter,
+  language,
 }: BugCardProps) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, [loading]);
+
   function limitText(text: string, maxLength: number): string {
     if (text.length <= maxLength) {
       return text;
@@ -35,7 +45,13 @@ const BugCard = ({
       <div className="flex flex-col justify-between bg-white rounded-xl w-full h-[250px] md:w-[400px] px-5 py-2 m-10 sm:w-[500px] ">
         {/*Top section */}
         <div className="flex justify-between">
-          <Image src={CodeIcon} alt="Code Icon" width={30} />
+          {/*left section (icon + language) */}
+          <div className="flex items-center gap-2">
+            <Image src={CodeIcon} alt="Code Icon" width={30} />
+            <h1 className="tetx-sm text-primaryAccent font-Montserrat font-bold">
+              {language}
+            </h1>
+          </div>
           <div className="flex flex-col justify-between text-primaryAccent font-Montserrat">
             <h1 className="text-sm md:text-base">By</h1>
             <p className="text-sm md:text-base font-bold">{author}</p>
@@ -66,11 +82,16 @@ const BugCard = ({
             </div>
           </div>
           {/*right button */}
-          <Link href={`/questions/${id}`}>
-            <button className="outline-none font-Raleway border-none bg-primaryAccent rounded-xl text-lg text-white px-3 py-1 text-center hover:bg-primaryAccentHover transition-colors hover:text-gray-300">
+
+          <form action={viewQuestion}>
+            <input type="hidden" name="questionId" defaultValue={id} />
+            <button
+              type="submit"
+              className="outline-none font-Raleway border-none bg-primaryAccent rounded-xl text-lg text-white px-3 py-1 text-center hover:bg-primaryAccentHover transition-colors hover:text-gray-300"
+            >
               Details
             </button>
-          </Link>
+          </form>
         </div>
       </div>
     );

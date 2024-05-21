@@ -27,6 +27,11 @@ const page = async () => {
             tags: true,
           },
         },
+        question: {
+          include: {
+            solutions: true,
+          },
+        },
       },
     });
     const comments = await prisma.comment.findMany({
@@ -34,6 +39,7 @@ const page = async () => {
         replies: true,
       },
     });
+
     const reports = await prisma.report.findMany();
     console.log(reports);
     return (

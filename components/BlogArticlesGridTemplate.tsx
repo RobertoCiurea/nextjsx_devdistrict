@@ -56,7 +56,7 @@ const BlogArticlesGridTemplate = ({ arr, label }: any) => {
                 />
               ))
           ) : (
-            <h1 className="text-primaryGray text-xl">No posts found</h1>
+            <h1 className="text-primaryGray text-xl">No blog posts found</h1>
           )}
         </section>
         {arr.length > 4 && (

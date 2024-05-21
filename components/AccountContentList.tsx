@@ -4,7 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Tab } from "@headlessui/react";
 import BlogArticlesGridTemplate from "./BlogArticlesGridTemplate";
+import BugArticlesGridTemplate from "./BugArticlesGridTemplate";
 import ReportCard from "./ReportCard";
+import Solution from "./Solution";
 
 type BlogTag = {
   id: string;
@@ -21,6 +23,17 @@ type BlogType = {
   userId: string;
   tags: BlogTag[];
   loading?: boolean;
+};
+
+type QuestionType = {
+  id: string;
+  title: string;
+  language: string;
+  createdAt: Date;
+  author: string;
+  description: string;
+  answersCounter: number;
+  viewsCounter: number;
 };
 
 type ReportType = {
@@ -41,13 +54,18 @@ const AccountContentList = ({
   isMyAccount,
   username,
   blogPosts,
+  questions,
   reports,
   followers,
+
   favoriteBlogPosts,
+  userId,
 }: {
   isMyAccount: boolean;
   username: string;
+  userId: string;
   blogPosts: BlogType[];
+  questions: QuestionType[];
   reports: ReportType[];
   followers: UserType[];
   favoriteBlogPosts: BlogType[];
@@ -110,6 +128,7 @@ const AccountContentList = ({
       <div className="flex justify-center flex-col">
         <ShowPosts
           posts={blogPosts}
+          questions={questions}
           favorites={favoriteBlogPosts}
           followers={followers}
           reports={reports}
@@ -126,20 +145,37 @@ export default AccountContentList;
 
 const ShowPosts = ({
   posts,
+  questions,
   favorites,
   followers,
   reports,
   output,
   isMyAccount,
   username,
-}: any) => {
+}: {
+  posts: BlogType[];
+  questions: QuestionType[];
+  favorites: BlogType[];
+  followers: UserType[];
+  reports: ReportType[];
+  output: number;
+  isMyAccount: boolean;
+  username: string;
+}) => {
+  console.log(questions);
   switch (output) {
     case 0:
       return (
-        <BlogArticlesGridTemplate
-          arr={posts}
-          label={isMyAccount ? "My posts" : `${username}'s posts`}
-        />
+        <>
+          <BlogArticlesGridTemplate
+            arr={posts}
+            label={isMyAccount ? "My blog posts" : `${username}'s blog posts`}
+          />
+          <BugArticlesGridTemplate
+            questions={questions}
+            label={isMyAccount ? "My questions" : `${username}'s questions`}
+          />
+        </>
       );
     case 1:
       return (

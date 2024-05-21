@@ -28,7 +28,10 @@ export default async function Home() {
       </div>
 
       <BlogArticlesGridTemplate arr={blogs} label={" Popular posts"} />
-      <BugArticlesGridTemplate questions={questions} />
+      <BugArticlesGridTemplate
+        questions={questions}
+        label="Bugs and questions"
+      />
     </div>
   );
 }

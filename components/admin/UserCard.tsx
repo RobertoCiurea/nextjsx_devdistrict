@@ -5,9 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "../Button";
 import BlogCard from "../BlogCard";
+import BugCard from "../BugCard";
 //actions
 import { deleteBlogPost } from "@/actions/deleteBlogPost";
 import { deleteUser } from "@/actions/deleteUser";
+import { deleteQuestion } from "@/actions/deleteQuestion";
 //headless ui
 import { Transition, Dialog } from "@headlessui/react";
 type TagType = {
@@ -34,6 +36,17 @@ type UserType = {
   image: string | null;
   userType: string;
   blogPosts?: BlogPost[];
+  questions?: QuestionType[];
+};
+type QuestionType = {
+  id: String;
+  title: String;
+  language: String;
+  createdAt: Date;
+  author: String;
+  description: string;
+  answersCounter: Number;
+  viewsCounter: Number;
 };
 const UserCard = ({
   id,
@@ -43,6 +56,7 @@ const UserCard = ({
   image,
   userType,
   blogPosts,
+  questions,
 }: UserType) => {
   const [viewPostsModal, setViewPostsModal] = useState(false);
   const [deleteUserModal, setDeleteUserModal] = useState(false);
@@ -61,6 +75,7 @@ const UserCard = ({
   const openDeleteUserModal = () => {
     setDeleteUserModal(true);
   };
+  console.log(questions);
 
   return (
     <div className="flex flex-col bg-backgroundAccent py-3 px-4 gap-5 mt-10 rounded-lg text-white shadow-xl">
@@ -140,51 +155,82 @@ const UserCard = ({
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-full sm:max-w-lg transform overflow-x-hidden rounded-2xl bg-background p-6 text-left text-white align-middle shadow-xl transition-all">
+                  {/*blog-posts and questions */}
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 "
                   >
-                    {name}'s Blog Posts
+                    {name}'s Posts
                   </Dialog.Title>
-                  <div className="mt-2 flex flex-col items-center gap-10">
-                    {(blogPosts?.length as number) > 0 ? (
-                      blogPosts?.map((post) => (
-                        <div
-                          key={post.id}
-                          className="flex flex-col items-center"
-                        >
-                          <BlogCard
-                            id={post.id}
-                            title={post.title}
-                            content={post.content}
-                            username={post.username}
-                            userid={post.userId}
-                            likesCnt={post.likesCounter}
-                            tags={post.tags}
-                            commentsCnt={post.commentsCounter}
-                          />
-                          <form action={deleteBlogPost}>
-                            <input
-                              type="hidden"
-                              defaultValue={post.id}
-                              name="blogPostId"
+                  <div className="flex flex-col gap-10">
+                    <div className="mt-2 flex flex-col items-center gap-10">
+                      {(blogPosts?.length as number) > 0 ? (
+                        blogPosts?.map((post) => (
+                          <div
+                            key={post.id}
+                            className="flex flex-col items-center"
+                          >
+                            <BlogCard
+                              id={post.id}
+                              title={post.title}
+                              content={post.content}
+                              username={post.username}
+                              userid={post.userId}
+                              likesCnt={post.likesCounter}
+                              tags={post.tags}
+                              commentsCnt={post.commentsCounter}
                             />
-                            <FormButton title="Delete post" />
-                          </form>
-                        </div>
-                      ))
-                    ) : (
-                      <h1>No posts yet</h1>
-                    )}
-                  </div>
+                            <form action={deleteBlogPost}>
+                              <input
+                                type="hidden"
+                                defaultValue={post.id}
+                                name="blogPostId"
+                              />
+                              <FormButton title="Delete post" />
+                            </form>
+                          </div>
+                        ))
+                      ) : (
+                        <h1>No blog posts yet</h1>
+                      )}
+                    </div>
 
-                  <div className="mt-4">
-                    <Button
-                      styles=""
-                      title="Cancel"
-                      handler={closePostsModal}
-                      buttonStyles="bg-primaryAccent hover:bg-primaryAccentHover transition-colors text-white px-2 py-1 rounded-lg shadow-xl"
-                    />
+                    <div className="mt-2 flex flex-col items-center gap-10">
+                      {(questions?.length as number) > 0 ? (
+                        questions?.map((question) => (
+                          <div className="flex flex-col items-center">
+                            <BugCard
+                              id={question.id as string}
+                              description={question.description as string}
+                              author={question.author as string}
+                              title={question.title as string}
+                              language={question.language as string}
+                              answersCounter={question.answersCounter as number}
+                              viewsCounter={question.viewsCounter as number}
+                              key={question.id as string}
+                            />
+                            <form action={deleteQuestion}>
+                              <input
+                                type="hidden"
+                                name="questionId"
+                                defaultValue={question.id as string}
+                              />
+                              <FormButton title="Delete question" />
+                            </form>
+                          </div>
+                        ))
+                      ) : (
+                        <h1>No questions yet</h1>
+                      )}
+                    </div>
+                    <div className="mt-4">
+                      <Button
+                        styles=""
+                        title="Cancel"
+                        handler={closePostsModal}
+                        buttonStyles="bg-primaryAccent hover:bg-primaryAccentHover transition-colors text-white px-2 py-1 rounded-lg shadow-xl"
+                      />
+                    </div>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

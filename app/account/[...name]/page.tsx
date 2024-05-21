@@ -27,6 +27,11 @@ const page = async ({ params }: { params: { name: string | any } }) => {
       tags: true,
     },
   });
+  const questions = await prisma.question.findMany({
+    where: {
+      author: name[0],
+    },
+  });
 
   const session = await getSession();
   //check if it's the user's account
@@ -35,6 +40,7 @@ const page = async ({ params }: { params: { name: string | any } }) => {
       userId: session?.user.id,
     },
   });
+
   //check if the user is already followed
   const followerId = session?.user.id;
   const followingId = userQuery?.id;
@@ -64,8 +70,10 @@ const page = async ({ params }: { params: { name: string | any } }) => {
         />
         <AccountContentList
           isMyAccount={session?.user.name === userQuery.name}
+          userId={session?.user.id as string}
           username={userQuery.name as string}
           blogPosts={blogPosts}
+          questions={questions}
           reports={reports}
           followers={followers.map((follow) => follow.follower)} //map through each follower and get the actual user data
           favoriteBlogPosts={userQuery.favoriteBlogPosts}

@@ -7,7 +7,6 @@ import DownArrowIcon from "@/public/icons/down_arrow_icon.svg";
 //react toastify
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { stat } from "fs";
 const initialState = {
   message: "",
   status: 0,

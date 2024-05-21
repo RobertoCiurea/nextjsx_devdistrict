@@ -1,10 +1,15 @@
 import React from "react";
 import EditorComponent from "@/components/EditorComponent";
-import ReplyIcon from "@/public/icons/reply_icon.svg";
-import Image from "next/image";
 import Link from "next/link";
 import VoteForm from "./VoteForm";
-
+import SolutionReply from "./SolutionReply";
+type ReplyType = {
+  id: string;
+  content: string;
+  author: string;
+  createdAt: Date;
+  solutionId: string;
+};
 const Solution = async ({
   votes,
   id,
@@ -14,6 +19,7 @@ const Solution = async ({
   createdAt,
   author,
   userId,
+  replies,
 }: {
   votes: number;
   id: string;
@@ -23,6 +29,7 @@ const Solution = async ({
   createdAt: Date;
   author: string;
   userId: string;
+  replies: ReplyType[];
 }) => {
   const solutionVoted = await prisma?.vote.findFirst({
     where: {
@@ -59,10 +66,7 @@ const Solution = async ({
                 </Link>
               </span>
             </div>
-            <span className="flex items-center cursor-pointer gap-1 justify-end">
-              <Image src={ReplyIcon} alt="Reply" width={25} />
-              <h1 className="underline">Reply</h1>
-            </span>
+            <SolutionReply solutionId={id} replies={replies} author={author} />
           </div>
         </div>
       </div>

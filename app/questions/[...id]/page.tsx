@@ -75,6 +75,7 @@ const page = async ({ params }: { params: { id: string | any } }) => {
               content={solution.content}
               createdAt={solution.createdAt}
               userId={session?.user.id as string}
+              replies={solution.replies}
             />
           ))}
       </div>

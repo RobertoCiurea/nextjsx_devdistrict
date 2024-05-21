@@ -17,6 +17,16 @@ type BlogPost = {
   username: string;
   tags: TagType[];
 };
+type QuestionType = {
+  id: string;
+  title: string;
+  language: string;
+  createdAt: Date;
+  author: string;
+  description: string;
+  answersCounter: number;
+  viewsCounter: number;
+};
 
 type UserType = {
   id: string;
@@ -26,6 +36,7 @@ type UserType = {
   image: string | null;
   userType: string;
   blogPosts: BlogPost[];
+  question: QuestionType[];
 };
 const UsersLayout = ({ users }: { users: UserType[] }) => {
   const [query, setQuery] = useState("");
@@ -37,7 +48,6 @@ const UsersLayout = ({ users }: { users: UserType[] }) => {
           return user.name?.toLowerCase().startsWith(query.toLowerCase());
         });
   }, [query, users]);
-  console.log(filteredUsers);
   return (
     <div className="flex flex-col justify-center items-center gap-5">
       <h1 className="text-2xl text-white">Users</h1>
@@ -65,6 +75,7 @@ const UsersLayout = ({ users }: { users: UserType[] }) => {
               image={user.image}
               userType={user.userType}
               blogPosts={user.blogPosts}
+              questions={user.question}
             />
           ))
         ) : (

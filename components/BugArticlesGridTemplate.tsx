@@ -47,20 +47,22 @@ const BlogArticlesGridTemplate = ({
             />
           ))}
         </section>
-        <div
-          className="flex justify-center items-center cursor-pointer my-5"
-          onClick={handleShowingBlogArticlesState}
-        >
-          <p className="text-xl mx-3 text-white font-Montserrat font-semibold">
-            Show {limit === 4 ? "more" : "less"}
-          </p>
-          <Image
-            src={DownArrow}
-            alt="Arrow"
-            width={22}
-            className={`${buttonShowStyles}`}
-          />
-        </div>
+        {questions.length > 4 && (
+          <div
+            className="flex justify-center items-center cursor-pointer my-5"
+            onClick={handleShowingBlogArticlesState}
+          >
+            <p className="text-xl mx-3 text-white font-Montserrat font-semibold">
+              Show {limit === 4 ? "more" : "less"}
+            </p>
+            <Image
+              src={DownArrow}
+              alt="Arrow"
+              width={22}
+              className={`${buttonShowStyles}`}
+            />
+          </div>
+        )}
       </div>
     </>
   );

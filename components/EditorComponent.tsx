@@ -26,6 +26,7 @@ const EditorComponent = ({
       <Editor
         defaultLanguage={language}
         height={"50vh"}
+        width={"800px"}
         defaultValue={code}
         onMount={onMount}
         theme="vs-dark"

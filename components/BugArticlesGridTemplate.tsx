@@ -9,14 +9,17 @@ type QuestionType = {
   description: string;
   author: string;
   title: string;
+  language: string;
   answersCounter: number;
   viewsCounter: number;
 };
 
 const BlogArticlesGridTemplate = ({
   questions,
+  label,
 }: {
   questions: QuestionType[];
+  label: string;
 }) => {
   const [limit, setLimit] = useState(4);
 
@@ -30,8 +33,7 @@ const BlogArticlesGridTemplate = ({
   return (
     <>
       <h1 className="text-2xl sm:text-3xl  font-semibold font-Raleway text-white ml-10 lg:ml-7 mb-10">
-        Bugs and <br className="block md:hidden" />
-        problems
+        {label}
       </h1>
       <div className="flex flex-col items-center">
         <section className="mx-4 gap-10   grid place-items-center grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
@@ -41,6 +43,7 @@ const BlogArticlesGridTemplate = ({
               description={article.description}
               author={article.author}
               title={article.title}
+              language={article.language}
               answersCounter={article.answersCounter}
               viewsCounter={article.viewsCounter}
               key={article.id}

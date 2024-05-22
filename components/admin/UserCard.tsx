@@ -175,7 +175,7 @@ const UserCard = ({
                               title={post.title}
                               content={post.content}
                               username={post.username}
-                              userid={post.userId}
+                              userId={post.userId}
                               likesCnt={post.likesCounter}
                               tags={post.tags}
                               commentsCnt={post.commentsCounter}
@@ -198,7 +198,10 @@ const UserCard = ({
                     <div className="mt-2 flex flex-col items-center gap-10">
                       {(questions?.length as number) > 0 ? (
                         questions?.map((question) => (
-                          <div className="flex flex-col items-center">
+                          <div
+                            key={question.id as string}
+                            className="flex flex-col items-center"
+                          >
                             <BugCard
                               id={question.id as string}
                               description={question.description as string}
@@ -207,7 +210,6 @@ const UserCard = ({
                               language={question.language as string}
                               answersCounter={question.answersCounter as number}
                               viewsCounter={question.viewsCounter as number}
-                              key={question.id as string}
                             />
                             <form action={deleteQuestion}>
                               <input

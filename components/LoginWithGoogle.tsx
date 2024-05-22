@@ -7,7 +7,6 @@ const handleLoginAction = async () => {
   const response = await signIn("google", {
     redirect: false,
   });
-  console.log(response);
 };
 type PropsTypes = {
   styles: string;

@@ -70,6 +70,8 @@ model User {
   solutions         Solution[]
   //votes for each solution
   votes             Vote[]
+  //likes for each blogpost
+  likes             Like[]
 }
 
 model Follow {
@@ -95,6 +97,7 @@ model BlogPost {
   user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   tags            Tag[]
   favoritedBy     User[]    @relation("UserFavoriteBlogPosts")
+  likes           Like[]
 }
 
 model Tag {
@@ -102,6 +105,16 @@ model Tag {
   name       String
   blogPostId String
   blogPost   BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+}
+
+model Like {
+  id         String   @id @default(cuid())
+  userId     String
+  blogPostId String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  blogPost   BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, blogPostId])
 }
 
 model Comment {

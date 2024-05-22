@@ -135,6 +135,7 @@ const AccountContentList = ({
           output={output}
           isMyAccount={isMyAccount}
           username={username}
+          userId={userId}
         />
       </div>
     </section>
@@ -152,6 +153,7 @@ const ShowPosts = ({
   output,
   isMyAccount,
   username,
+  userId,
 }: {
   posts: BlogType[];
   questions: QuestionType[];
@@ -161,6 +163,7 @@ const ShowPosts = ({
   output: number;
   isMyAccount: boolean;
   username: string;
+  userId: string;
 }) => {
   console.log(questions);
   switch (output) {
@@ -170,6 +173,7 @@ const ShowPosts = ({
           <BlogArticlesGridTemplate
             arr={posts}
             label={isMyAccount ? "My blog posts" : `${username}'s blog posts`}
+            userId={userId}
           />
           <BugArticlesGridTemplate
             questions={questions}
@@ -179,7 +183,11 @@ const ShowPosts = ({
       );
     case 1:
       return (
-        <BlogArticlesGridTemplate arr={favorites} label="My favorite posts" />
+        <BlogArticlesGridTemplate
+          arr={favorites}
+          label="My favorite posts"
+          userId={userId}
+        />
       );
     case 2:
       return <Followers followers={followers} />;

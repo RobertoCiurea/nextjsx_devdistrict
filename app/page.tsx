@@ -27,7 +27,11 @@ export default async function Home() {
         <ReportProblem userId={userId} />
       </div>
 
-      <BlogArticlesGridTemplate arr={blogs} label={" Popular posts"} />
+      <BlogArticlesGridTemplate
+        arr={blogs}
+        label={" Popular posts"}
+        userId={session?.user.id as string}
+      />
       <BugArticlesGridTemplate
         questions={questions}
         label="Bugs and questions"

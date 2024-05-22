@@ -5,8 +5,17 @@ import UpvoteIcon from "@/public/icons/upvote_unfocused.svg";
 import UpvoteIconGray from "@/public/icons/upvote_gray.svg";
 import CommentIconGray from "@/public/icons/comments_gray.svg";
 import UpvoteIconFocused from "@/public/icons/upvote_focused.svg";
+import { useFormState } from "react-dom";
+import { likeBlogPost } from "@/actions/likeBlogPost";
 import Link from "next/link";
+//react toastify
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
+const initialState = {
+  message: "",
+  status: 0,
+};
 type BlogTag = {
   id: string;
   name: string;
@@ -18,7 +27,7 @@ type BlogCardProps = {
   title: string;
   content: string;
   username: String;
-  userid: String;
+  userId: String;
   likesCnt: number;
   commentsCnt: number;
   tags: BlogTag[];
@@ -29,19 +38,74 @@ const BlogCard = ({
   title,
   content,
   username,
-  userid,
+  userId,
   likesCnt,
   commentsCnt,
   tags,
 }: BlogCardProps) => {
   const [clicked, setClicked] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  const [state, formAction] = useFormState(likeBlogPost, initialState);
+  console.log(state);
+  const checkLikedPost = async () => {
+    try {
+      const blogPostId = id;
+      const data = { userId, blogPostId };
+      const response = await fetch("/api/likes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data }),
+      });
+      if (response.status === 200) setClicked(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
-  }, [loading]);
+    checkLikedPost();
+    switch (state.status) {
+      case 200:
+        toast.success(state.message, {
+          position: "bottom-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        break;
+      case 401:
+        toast.warn(state.message, {
+          position: "bottom-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        break;
+      case 500:
+        toast.error(state.message, {
+          position: "bottom-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+    }
+  }, [state.message, state.status]);
 
   const handleUpvoteClick = () => {
     setClicked((prevClicked) => !prevClicked);
@@ -55,22 +119,39 @@ const BlogCard = ({
     }
   }
   const limitedContent = limitText(content, 150);
+  console.log(userId);
   if (!loading)
     return (
       //outer card
+
       <div className="flex flex-col justify-between w-full min-h-[350px]  sm:w-[500px] md:w-[400px] border-[2px] border-primaryAccentHover rounded-xl mx-10 my-10 py-1 px-2">
         {/*Top section */}
         <div className="flex justify-between mx-10 mt-2 mb-3">
           <h1 className="text-xl font-Raleway font-semibold text-white">
             {title}
           </h1>
-          <Image
-            src={clicked ? UpvoteIconFocused : UpvoteIcon}
-            alt="Upvote"
-            width={30}
-            className="cursor-pointer"
-            onClick={handleUpvoteClick}
-          />
+          <form action={formAction}>
+            <input
+              type="hidden"
+              name="userId"
+              defaultValue={userId as string}
+            />
+            <input type="hidden" name="blogPostId" defaultValue={id} />
+            <input
+              type="hidden"
+              name="like"
+              defaultValue={clicked ? "0" : "1"}
+            />
+            <button type="submit">
+              <Image
+                src={clicked ? UpvoteIconFocused : UpvoteIcon}
+                alt="Upvote"
+                width={40}
+                className="cursor-pointer"
+                onClick={handleUpvoteClick}
+              />
+            </button>
+          </form>
         </div>
         {/*Text content */}
         <div>
@@ -121,6 +202,19 @@ const BlogCard = ({
             </button>
           </Link>
         </div>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={2000}
+          limit={1}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
       </div>
     );
   else

@@ -46,7 +46,6 @@ const BlogCard = ({
   const [clicked, setClicked] = useState(false);
   const [loading, setLoading] = useState(true);
   const [state, formAction] = useFormState(likeBlogPost, initialState);
-  console.log(state);
   const checkLikedPost = async () => {
     try {
       const blogPostId = id;
@@ -119,7 +118,6 @@ const BlogCard = ({
     }
   }
   const limitedContent = limitText(content, 150);
-  console.log(userId);
   if (!loading)
     return (
       //outer card

@@ -3,7 +3,29 @@ import React, { useState } from "react";
 import BlogCard from "./BlogCard";
 import Image from "next/image";
 import DownArrow from "@/public/icons/down_arrow.svg";
-const BlogArticlesGridTemplate = ({ arr, label }: any) => {
+type BlogTag = {
+  id: string;
+  name: string;
+  blogPostId: string;
+};
+type BlogType = {
+  id: string;
+  title: string;
+  content: string;
+  username: string;
+  likesCounter: number | any;
+  commentsCounter: number | any;
+  tags: BlogTag[];
+};
+const BlogArticlesGridTemplate = ({
+  arr,
+  label,
+  userId,
+}: {
+  arr: BlogType[];
+  label: string;
+  userId: string;
+}) => {
   const [limit, setLimit] = useState(4);
 
   const buttonShowStyles = limit === 4 ? "" : "rotate-180";
@@ -11,22 +33,6 @@ const BlogArticlesGridTemplate = ({ arr, label }: any) => {
   const handleShowingBlogArticlesState = () => {
     if (limit === 4) setLimit(arr.length);
     else setLimit(4);
-  };
-
-  type BlogTag = {
-    id: string;
-    name: string;
-    blogPostId: string;
-  };
-  type BlogType = {
-    id: string;
-    title: string;
-    content: string;
-    username: string;
-    likesCounter: number | any;
-    commentsCounter: number | any;
-    userId: string;
-    tags: BlogTag[];
   };
 
   return (
@@ -48,7 +54,7 @@ const BlogArticlesGridTemplate = ({ arr, label }: any) => {
                   title={blog.title}
                   content={blog.content}
                   username={blog.username}
-                  userid={blog.userId}
+                  userId={userId}
                   likesCnt={blog.likesCounter}
                   commentsCnt={blog.commentsCounter}
                   tags={blog.tags}

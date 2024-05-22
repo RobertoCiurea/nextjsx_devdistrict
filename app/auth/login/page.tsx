@@ -5,6 +5,36 @@ import LoginwithGoogle from "@/components/LoginWithGoogle";
 import { getSession } from "../../utils/getSession";
 import Forbidden from "@/components/Forbidden";
 import Link from "next/link";
+import { Metadata } from "next";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+export const metadata: Metadata = {
+  title: "Login to DevDistrict",
+  description: "Login to your account and begin your journey! ",
+  openGraph: {
+    title: "Login to DevDistrict",
+    description: "Login to your account and begin your journey! ",
+    url: `${baseUrl}/auth/login`,
+    images: [
+      {
+        url: `${baseUrl}/public/icons/favicon.ico`,
+        width: 800,
+        height: 600,
+        alt: "DevDistrict Icon",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Login to DevDistrict",
+    description: "Login to your account and begin your journey! ",
+    images: [`${baseUrl}/public/icons/favicon.ico`],
+  },
+  alternates: {
+    canonical: `${baseUrl}/auth/login`,
+  },
+};
+
 const page = async () => {
   const session = await getSession();
 

@@ -4,6 +4,55 @@ import { getSession } from "@/app/utils/getSession";
 import AccountHeader from "@/components/AccountHeader";
 import AccountContentList from "@/components/AccountContentList";
 import SelectPostType from "@/components/SelectPostType";
+
+import { Metadata, ResolvingMetadata } from "next";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+type Props = {
+  params: { name: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const name = params.name;
+  const user = await prisma.user.findUnique({
+    where: {
+      name: name[0],
+    },
+  });
+  return {
+    metadataBase: new URL(`${baseUrl}/user/${name}`),
+    title: `${user?.name}'s account`,
+    description: `Check ${user?.name}'s account`,
+    openGraph: {
+      title: `${user?.name}'s blog user`,
+      description: `Check ${user?.name}'s account`,
+      url: `${baseUrl}/user/${name}`,
+      images: [
+        {
+          url: user?.image!,
+          width: 800,
+          height: 600,
+          alt: "DevDistrict Icon",
+        },
+      ],
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${user?.name}'s blog user`,
+      description: `Check ${user?.name}'s account`,
+      images: [user?.image!],
+    },
+    alternates: {
+      canonical: `${baseUrl}/user/${name}`,
+    },
+  };
+}
+
 const page = async ({ params }: { params: { name: string | any } }) => {
   const { name } = params;
 

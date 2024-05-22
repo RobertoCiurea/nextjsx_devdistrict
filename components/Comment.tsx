@@ -380,6 +380,7 @@ const Comment = ({
                             key={reply.id}
                             className="sm:px-3 py-2 bg-backgroundAccentDark flex flex-col justify-end rounded-lg  max-w-[500px]"
                           >
+                            <span className="justify-end"></span>
                             <p className="mr-20 break-all text-white">
                               {reply.content}
                             </p>

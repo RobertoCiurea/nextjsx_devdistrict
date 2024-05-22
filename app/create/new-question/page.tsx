@@ -2,6 +2,39 @@ import React from "react";
 import { getSession } from "@/app/utils/getSession";
 import Forbidden from "@/components/Forbidden";
 import BugArticleForm from "@/components/BugArticleForm";
+import { Metadata } from "next";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+export const metadata: Metadata = {
+  title: "Create new question about a bug or a problem",
+  description:
+    "Let's create a new question about a bug or a problem and share it with the comunity! ",
+  openGraph: {
+    title: "Create new question about a bug or a problem",
+    description:
+      "Let's create a new question about a bug or a problem and share it with the comunity! ",
+    url: `${baseUrl}/create/new-question`,
+    images: [
+      {
+        url: `${baseUrl}/public/icons/favicon.ico`,
+        width: 800,
+        height: 600,
+        alt: "DevDistrict Icon",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Create new question about a bug or a problem",
+    description:
+      "Let's create a new question about a bug or a problem and share it with the comunity! ",
+    images: [`${baseUrl}/public/icons/favicon.ico`],
+  },
+  alternates: {
+    canonical: `${baseUrl}/create/new-question`,
+  },
+};
+
 const page = async () => {
   const session = await getSession();
   if (session?.user) {

@@ -6,6 +6,55 @@ import { getSession } from "@/app/utils/getSession";
 import EditorComponent from "@/components/EditorComponent";
 import SolutionForm from "@/components/SolutionForm";
 import Solution from "@/components/Solution";
+
+import { Metadata, ResolvingMetadata } from "next";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+type Props = {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const id = params.id;
+  const post = await prisma.question.findUnique({
+    where: {
+      id: id[0],
+    },
+  });
+  return {
+    metadataBase: new URL(`${baseUrl}/question/${id}`),
+    title: `${post?.author}'s blog post`,
+    description: post?.title,
+    openGraph: {
+      title: `${post?.author}'s blog post`,
+      description: post?.title,
+      url: `${baseUrl}/question/${id}`,
+      images: [
+        {
+          url: `${baseUrl}/public/icons/favicon.ico`,
+          width: 800,
+          height: 600,
+          alt: "DevDistrict Icon",
+        },
+      ],
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${post?.author}'s blog post`,
+      description: post?.title,
+      images: [`${baseUrl}/public/icons/favicon.ico`],
+    },
+    alternates: {
+      canonical: `${baseUrl}/question/${id}`,
+    },
+  };
+}
+
 const page = async ({ params }: { params: { id: string | any } }) => {
   const questionId = params.id[0];
   const session = await getSession();

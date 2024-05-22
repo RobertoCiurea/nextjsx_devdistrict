@@ -5,6 +5,40 @@ import BugArticlesGridTemplate from "@/components/BugArticlesGridTemplate";
 import ReportProblem from "@/components/ReportProblem";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
+import { Metadata } from "next";
+
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+export const metadata: Metadata = {
+  title: "DevDistrict",
+  description:
+    "DevDistrict is an open-source devs comunity. Here you can post blog articles, resolve problems and bugs and share experiences and positive thoughts ",
+  openGraph: {
+    title: "DevDistrict",
+    description:
+      "DevDistrict is an open-source devs comunity. Here you can post blog articles, resolve problems and bugs and share experiences and positive thoughts ",
+    url: baseUrl,
+    images: [
+      {
+        url: `${baseUrl}/public/icons/favicon.ico`,
+        width: 800,
+        height: 600,
+        alt: "DevDistrict Icon",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "DevDistrict",
+    description:
+      "DevDistrict is an open-source devs comunity. Here you can post blog articles, resolve problems and bugs and share experiences and positive thoughts ",
+    images: [`${baseUrl}/public/icons/favicon.ico`],
+  },
+  alternates: {
+    canonical: baseUrl,
+  },
+};
+
 export default async function Home() {
   const session = await getSession();
   // console.log(session);
@@ -17,8 +51,6 @@ export default async function Home() {
     },
   });
   const questions = await prisma.question.findMany();
-
-  // console.log(blogs);
 
   return (
     <div className="relative">

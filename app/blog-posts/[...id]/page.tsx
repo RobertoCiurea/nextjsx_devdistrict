@@ -4,6 +4,53 @@ const prisma = new PrismaClient();
 import BlogPostComments from "@/components/BlogPostComments";
 import { getSession } from "@/app/utils/getSession";
 import AddBlogPostToFavorite from "@/components/AddBlogPostToFavorite";
+import { Metadata, ResolvingMetadata } from "next";
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+type Props = {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const id = params.id;
+  const post = await prisma.blogPost.findUnique({
+    where: {
+      id: id[0],
+    },
+  });
+  return {
+    metadataBase: new URL(`${baseUrl}/blogPost/${id}`),
+    title: `${post?.username}'s blog post`,
+    description: post?.title,
+    openGraph: {
+      title: `${post?.username}'s blog post`,
+      description: post?.title,
+      url: `${baseUrl}/blogPost/${id}`,
+      images: [
+        {
+          url: `${baseUrl}/public/icons/favicon.ico`,
+          width: 800,
+          height: 600,
+          alt: "DevDistrict Icon",
+        },
+      ],
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${post?.username}'s blog post`,
+      description: post?.title,
+      images: [`${baseUrl}/public/icons/favicon.ico`],
+    },
+    alternates: {
+      canonical: `${baseUrl}/blogPost/${id}`,
+    },
+  };
+}
 
 const page = async ({ params }: { params: { id: string | any } }) => {
   const blogPostId = params.id[0];

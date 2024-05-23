@@ -38,7 +38,7 @@ export const POST = async (req: Request) => {
       },
     });
     if (solution) {
-      revalidatePath("/question/[id]");
+      revalidatePath("/question/[id]", "page");
       return new Response("Solution added successfully", {
         status: 200,
       });

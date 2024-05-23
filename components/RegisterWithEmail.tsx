@@ -129,7 +129,7 @@ const RegisterWithEmail = () => {
           type="submit"
           className="m-2 w-full bg-primaryAccent p-2 text-white font-semibold text-lg md:text-xl rounded-lg mx-auto hover:bg-primaryAccentHover hover:text-gray-300"
         >
-          Regitser with Email
+          Register with Email
         </button>
       </form>
     </>

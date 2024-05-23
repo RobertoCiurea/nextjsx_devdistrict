@@ -41,19 +41,19 @@ const Solution = async ({
     <>
       <div className="flex justify-center mt-10 gap-10">
         {/*Left section */}
-        {/* <VoteForm
+        <VoteForm
           userId={userId}
           solutionId={id}
           voteId={solutionVoted?.id as string}
           votes={votes}
           voteValue={solutionVoted?.value as number}
-        /> */}
+        />
         {/*Right Section */}
         <div className="flex flex-col gap-5 min-w-[400px] sm:w-[800px]">
           {/*Content */}
           <div>
             <p className="font-Raleway">{content}</p>
-            <EditorComponent language={language} code={code} />
+            {/* <EditorComponent language={language} code={code} /> */}
           </div>
           {/*Bottom Section */}
           <div className="flex flex-col gap-3 font-Raleway text-primaryGray">

@@ -26,8 +26,7 @@ export const viewQuestion = async (formData: FormData) => {
     console.log(error);
   } finally {
     if (view) {
-      console.log("redirected nigga");
-      redirect(`questions/${questionId}`);
+      redirect(`/questions/${questionId}`);
     }
   }
 };

@@ -1,9 +1,7 @@
 "use client";
 import Image from "next/image";
 import Logo from "@/public/images/devdistrict_logo.png";
-import HamburgerMenu from "./HamburgerMenu";
 import Link from "next/link";
-import SignOutButton from "./SIgnOutButton";
 import HeaderUserSection from "./HeaderUserSection";
 import { useSession } from "next-auth/react";
 const Header = () => {

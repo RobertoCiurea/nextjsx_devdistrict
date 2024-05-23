@@ -11,7 +11,7 @@ import NewsletterForm from "./NewsletterForm";
 const Footer = () => {
   return (
     <section className="flex flex-col gap-20 items-center border-b-8 border-primaryAccentHover p-10">
-      <div className="flex justify-around flex-col gap-20 md:flex-row items-center ">
+      <div className="flex justify-around w-full flex-col gap-20 md:flex-row items-center ">
         {/*Left section */}
         <div className="flex flex-col gap-12 md:justify-evenly">
           {/*newsletter section */}

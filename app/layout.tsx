@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/components/SessionProvider";
 import { authOptions } from "./utils/auth";
-
+import { SpeedInsights } from "@vercel/speed-insights/next";
 export const metadata: Metadata = {
   title: "DevDistrict",
   description:
@@ -22,6 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-background">
         <SessionProvider session={session as any}>
+          <SpeedInsights />
           <Header />
           {children}
           <Footer />

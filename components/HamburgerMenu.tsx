@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import SignOutButton from "./SIgnOutButton";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 
@@ -40,7 +40,12 @@ const HamburgerMenu = () => {
                 <h1 className="text-center">Acount</h1>
               </div>
             </Link>
-            <SignOutButton styles="py-1 px-2 mt-2" />
+            <button
+              className="font-Raleway text-lg text-center  text-primaryAccent rounded-full font-bold bg-white shadow-lg shadow-white/35 hover:bg-slate-200 hover:shadow-white/30 md:p-3"
+              onClick={() => signOut({ callbackUrl: "/auth/login" })}
+            >
+              Sign out
+            </button>
 
             {/*report a problem component */}
           </div>

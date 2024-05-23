@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-const Forbidden = ({ placeholder }: { placeholder: string }) => {
+const Forbidden = ({ placeholder }: { placeholder?: string }) => {
   const srcArray = [
     "https://giphy.com/embed/VphQlWcd8xUThBQ9R2/video",
     "https://giphy.com/embed/tSPd9mtiuicMwuovjN",

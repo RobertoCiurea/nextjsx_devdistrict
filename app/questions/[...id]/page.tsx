@@ -112,7 +112,7 @@ const page = async ({ params }: { params: { id: string | any } }) => {
         <h1 className="text-xl text-white">
           {question?.answersCounter} Answers
         </h1>
-        {/* {(question?.solutions?.length as number) > 0 &&
+        {(question?.solutions?.length as number) > 0 &&
           question?.solutions?.map((solution) => (
             <Solution
               key={solution.id}
@@ -126,7 +126,7 @@ const page = async ({ params }: { params: { id: string | any } }) => {
               userId={session?.user.id as string}
               replies={solution.replies}
             />
-          ))} */}
+          ))}
       </div>
       {/*Soltuion area */}
       {session?.user && (

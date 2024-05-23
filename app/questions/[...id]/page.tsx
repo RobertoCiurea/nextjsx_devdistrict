@@ -56,22 +56,22 @@ export async function generateMetadata(
 }
 */
 const page = async ({ params }: { params: { id: string | any } }) => {
-  //   const questionId = params.id[0];
-  //   const session = await getSession();
-  //   //query the question by its id from database and include also the solutions and the replies for solutions
-  //   const question = await prisma.question.findUnique({
-  //     where: {
-  //       id: questionId,
-  //     },
-  //     include: {
-  //       solutions: {
-  //         include: {
-  //           replies: true,
-  //           votes: true,
-  //         },
-  //       },
-  //     },
-  //   });
+  const questionId = params.id[0];
+  const session = await getSession();
+  //query the question by its id from database and include also the solutions and the replies for solutions
+  const question = await prisma.question.findUnique({
+    where: {
+      id: questionId,
+    },
+    include: {
+      solutions: {
+        include: {
+          replies: true,
+          votes: true,
+        },
+      },
+    },
+  });
 
   // return (
   //   <section className="flex justify-center gap-10 items-center flex-col mx-2 text-white font-Montserrat">

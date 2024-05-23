@@ -114,18 +114,19 @@ const page = async ({ params }: { params: { id: string | any } }) => {
         </h1>
         {(question?.solutions?.length as number) > 0 &&
           question?.solutions?.map((solution) => (
-            <Solution
-              key={solution.id}
-              votes={solution.votesCounter}
-              id={solution.id}
-              author={solution.author}
-              language={solution.language}
-              code={solution.code}
-              content={solution.content}
-              createdAt={solution.createdAt}
-              userId={session?.user.id as string}
-              replies={solution.replies}
-            />
+            // <Solution
+            //   key={solution.id}
+            //   votes={solution.votesCounter}
+            //   id={solution.id}
+            //   author={solution.author}
+            //   language={solution.language}
+            //   code={solution.code}
+            //   content={solution.content}
+            //   createdAt={solution.createdAt}
+            //   userId={session?.user.id as string}
+            //   replies={solution.replies}
+            // />
+            <h1 className="text-xl text-white">Solution</h1>
           ))}
       </div>
       {/*Soltuion area */}

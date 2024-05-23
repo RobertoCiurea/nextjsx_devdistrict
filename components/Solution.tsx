@@ -53,7 +53,7 @@ const Solution = async ({
           {/*Content */}
           <div>
             <p className="font-Raleway">{content}</p>
-            {/* <EditorComponent language={language} code={code} /> */}
+            <EditorComponent language={language} code={code} />
           </div>
           {/*Bottom Section */}
           <div className="flex flex-col gap-3 font-Raleway text-primaryGray">
@@ -66,7 +66,7 @@ const Solution = async ({
                 </Link>
               </span>
             </div>
-            <SolutionReply solutionId={id} replies={replies} author={author} />
+            {/* <SolutionReply solutionId={id} replies={replies} author={author} /> */}
           </div>
         </div>
       </div>

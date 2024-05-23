@@ -2,6 +2,8 @@ import React from "react";
 import EditorComponent from "@/components/EditorComponent";
 import Link from "next/link";
 import VoteForm from "./VoteForm";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
 import SolutionReply from "./SolutionReply";
 type ReplyType = {
   id: string;
@@ -31,7 +33,7 @@ const Solution = async ({
   userId: string;
   replies: ReplyType[];
 }) => {
-  const solutionVoted = await prisma?.vote.findFirst({
+  const solutionVoted = await prisma.vote.findFirst({
     where: {
       userId: userId,
       solutionId: id,
@@ -66,7 +68,7 @@ const Solution = async ({
                 </Link>
               </span>
             </div>
-            {/* <SolutionReply solutionId={id} replies={replies} author={author} /> */}
+            <SolutionReply solutionId={id} replies={replies} author={author} />
           </div>
         </div>
       </div>

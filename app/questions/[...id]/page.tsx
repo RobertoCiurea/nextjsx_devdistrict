@@ -13,7 +13,7 @@ type Props = {
   params: { id: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
-/*
+
 export async function generateMetadata(
   { params, searchParams }: Props,
   parent: ResolvingMetadata
@@ -54,7 +54,7 @@ export async function generateMetadata(
     },
   };
 }
-*/
+
 const page = async ({ params }: { params: { id: string | any } }) => {
   const questionId = params.id[0];
   const session = await getSession();

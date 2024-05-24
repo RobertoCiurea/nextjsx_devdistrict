@@ -34,10 +34,10 @@ const Footer = () => {
                   Contact us
                 </Link>
                 <Link
-                  href="#"
+                  href="/admin-panel"
                   className="hover:text-primaryGray transition-transform hover:translate-x-2"
                 >
-                  Report problem
+                  Admin panel
                 </Link>
               </div>
               <div className="flex flex-col">
